@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{minted}
+\usepackage[margin=2cm]{geometry}
+
+\title{Tutorato Programmazione 2}
+\date{11 Marzo 2026}
+
+\begin{document}
+
+\maketitle
+
+\textbf{CREARE SCHELETRO PER ESERCIZI}
+
+\section{Esercizi Introduttivi}
+\subsection{Media, mediana e moda}
+Scrivere un programma che legga da tastiera una sequenza di $n$ numeri interi (con $n$ scelto dall'utente). Il programma deve calcolare e stampare:
+\begin{itemize}
+    \item \textbf{Media}: Valore decimale della somma degli elementi divisa per $n$.
+    \item \textbf{Mediana}: Il valore centrale della sequenza ordinata (o la media dei due centrali se $n$ è pari).
+    \item \textbf{Moda}: Il valore che compare più frequentemente.
+\end{itemize}
+\textit{Suggerimento: Utilizzare \texttt{java.util.Arrays.sort()} per l'ordinamento.}
+
+\subsection{Stringa Palindroma}
+Implementare un metodo statico \texttt{isPalindrome(String s)} che restituisca un valore booleano. Il programma deve leggere una stringa dall'utente e determinare se è palindroma, ignorando la differenza tra maiuscole e minuscole e gli spazi bianchi.
+\begin{itemize}
+    \item Esempio: "I topi non avevano nipoti" $\rightarrow$ \texttt{true}.
+\end{itemize}
+\textit{Suggerimento: Usare i metodi \texttt{replace()}, \texttt{toLowerCase()}} per aiutarvi con l'esercizio.
+
+\subsection{Bilanciamento delle Parentesi}
+Scrivere un programma che riceva in input una stringa composta da un'espressione matematica (con sole parentesi tonde). Eg: \texttt{(5+3)*2}. Il programma deve verificare se la sequenza è bilanciata correttamente.
+\begin{itemize}
+    \item Esempio corretto: \texttt{(5-2)*(3*5)}
+    \item Esempio errato: \texttt{3*((2+5)*(2}
+\end{itemize}
+
+\section{Esercizi OOP}
+\subsection{Navi e Automobili}
+Data la classe:
+\begin{minted}{java}
+public class Auto {
+    public final String tipo;
+    public Auto(final String tipo) {
+        this.tipo = tipo;
+    }
+}
+\end{minted}
+Si crei una classe \textbf{Nave} che permetta di caricare automobili.
+\begin{itemize}
+    \item Questa classe deve deﬁnire un metodo caricaAuto([…]) a cui sarà passato un oggetto Auto.
+    \item Ogni
+oggetto auto verrà immagazzinato in un array d’istanza chiamato autoArray, nel primo posto
+disponibile dell’array.
+\end{itemize}
+
+\subsection{Microscopi e Batteri}
+Si implementi una classe \textbf{Microscopio} con un attributo \textbf{TipoMicroscopio} (elettronico o ottico) definito da un enum.
+La classe dovra avere un costruttore di default (\texttt{tipoMicroscopio = TipoMicroscopio.OTTICO}) e un costruttore specifico.
+Si implementi inoltre una classe Batterio con le seguenti caratteristiche:
+\begin{itemize}
+    \item Stringa identificativa \texttt{descrizione}
+    \item La sua morfologia (Cocco, Bacillo o Spirillo) e la sua forma (rispettivamente sferica, a bastoncino e spirale). Si consiglia di usare un enum per questi valori
+    \item Fare l'override di \texttt{toString()} per la stampa a video.
+\end{itemize}
+Infine si implementi il metodo \texttt{osserva(Batterio b)} nella classe Microscopio, che stampi a video le caratteristiche del batterio. 
+\paragraph{Esempio}
+\begin{minted}{java}
+Microscopio m = new Microscopio(TipoMicroscopio.ELETTRONICO);
+Batterio b = new Batterio(Morfologia.COCCO);
+m.osserva(b);
+// Output
+// Microscopio elettronico: Streptococco, Morfologia: Cocco, Forma: Sferica
+\end{minted}
+
+\subsection{Melinda}
+Si richiede di modellare un sistema di compravendita di mele utilizzando il \textbf{Factory Pattern}. Il sistema deve gestire le transazioni tramite un portafoglio virtuale e verificare la disponibilità del saldo.
+
+
+\subsubsection*{Portafoglio}
+La classe \texttt{Portafoglio} funge da gestore del credito dell'utente. Deve includere:
+\begin{itemize}
+    \item \textbf{Attributi:} Un intero \texttt{saldo}.
+    \item \textbf{Metodi:} 
+        \begin{itemize}
+            \item \texttt{scalaSaldo(int costo)}: sottrae l'importo dal saldo.
+            \item \texttt{incrementaSaldo(int incremento)}: aggiunge fondi.
+            \item Un \textit{getter} per visualizzare il saldo attuale.
+        \end{itemize}
+\end{itemize}
+
+\subsubsection*{Mela}
+Ogni mela deve essere caratterizzata da:
+\begin{itemize}
+    \item Un attributo \texttt{Tipo}, che ne definisce la varietà e il costo implementato tramite un \texttt{enum} (\textit{Golden(5), Granny Smith(6), Stayman(4)}).
+    \item Un attributo \texttt{quantità} (intero).
+\end{itemize}
+
+\subsubsection*{Fruttivendolo (Factory)}
+Implementare la classe \texttt{Fruttivendolo} che espone i metodi statici per l'acquisto delle mele.
+\begin{itemize}
+    \item \textbf{Logica di acquisto:} Ogni metodo riceve in input un oggetto \texttt{Portafoglio} e la quantità di mele richieste
+    \item \textbf{Verifica Saldo:} 
+        \begin{itemize}
+            \item Se il saldo è \textbf{sufficiente}: viene detratto il costo e restituita l'istanza della mela.
+            \item Se il saldo è \textbf{insufficiente}: il metodo stampa un messaggio d'errore e restituisce \texttt{null}.
+        \end{itemize}
+\end{itemize}
+\newline
+\textit{Suggerimento: Per evitare la duplicazione di codice, si consiglia di implementare un metodo di utilità privato all'interno della classe \texttt{Fruttivendolo} che gestisca la validazione del saldo per tutti i tipi di mela.}
+\end{document}
