@@ -13,8 +13,6 @@
 
 \maketitle
 
-\textbf{CREARE SCHELETRO PER ESERCIZI}
-
 \section{Note}
 In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{documentazione Java}. Sarà accessibile anche durante l'esame.
 
@@ -80,7 +78,10 @@ Si implementi inoltre una classe Batterio con le seguenti caratteristiche:
     \item Fare l'override di \texttt{toString()} per la stampa a video.
 \end{itemize}
 Infine si implementi il metodo \texttt{osserva(Batterio b)} nella classe Microscopio, che stampi a video le caratteristiche del batterio. 
-\paragraph{Esempio}
+
+\noindent \href{https://raw.githubusercontent.com/alterax05/Tutorati-P2/refs/heads/main/tutorato%201%2011-03/1TutP2/src/es2_OOP/Main.java}{\textit{File main.java}}
+
+\subsubsection*{Esempio}
 \begin{minted}{java}
 Microscopio m = new Microscopio(TipoMicroscopio.ELETTRONICO);
 Batterio b = new Batterio(Morfologia.COCCO);
@@ -89,7 +90,10 @@ m.osserva(b);
 // Microscopio elettronico: Streptococco, Morfologia: Cocco, Forma: Sferica
 \end{minted}
 
+
+
 \subsection{Settings}
+
 Si implementi una classe \textbf{Settings} utilizzando il \textit{Singleton Pattern}.
 L'utente deve poter settare alcune impostazioni tramite opportuni metodi:
 \begin{itemize}
@@ -101,5 +105,7 @@ Inoltre sarà necessario implementere l'override a \texttt{toString()} per poter
 Network: <STATUS> <IP> <SSID> (stampare i dati solo se status = CONNECTED) \\
 Theme: <THEME>
 }
+
+\noindent \href{https://raw.githubusercontent.com/alterax05/Tutorati-P2/refs/heads/main/tutorato%201%2011-03/1TutP2/src/es3_OOP/Main.java}{ \textit{File main.java}}
 
 \end{document}
