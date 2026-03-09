@@ -4,6 +4,7 @@
 \usepackage[margin=2cm]{geometry}
 
 \title{Tutorato Programmazione 2}
+\author{Michele Porcellato}
 \date{11 Marzo 2026}
 
 \begin{document}
@@ -74,39 +75,17 @@ m.osserva(b);
 // Microscopio elettronico: Streptococco, Morfologia: Cocco, Forma: Sferica
 \end{minted}
 
-\subsection{Melinda}
-Si richiede di modellare un sistema di compravendita di mele utilizzando il \textbf{Factory Pattern}. Il sistema deve gestire le transazioni tramite un portafoglio virtuale e verificare la disponibilità del saldo.
-
-
-\subsubsection*{Portafoglio}
-La classe \texttt{Portafoglio} funge da gestore del credito dell'utente. Deve includere:
+\subsection{Settings}
+Si implementi una classe \textbf{Settings} utilizzando il \textit{Singleton Pattern}.
+L'utente deve poter settare alcune impostazioni tramite opportuni metodi:
 \begin{itemize}
-    \item \textbf{Attributi:} Un intero \texttt{saldo}.
-    \item \textbf{Metodi:} 
-        \begin{itemize}
-            \item \texttt{scalaSaldo(int costo)}: sottrae l'importo dal saldo.
-            \item \texttt{incrementaSaldo(int incremento)}: aggiunge fondi.
-            \item Un \textit{getter} per visualizzare il saldo attuale.
-        \end{itemize}
+    \item \texttt{setNetwork(Network n)} accetta un oggetto di tipo \texttt{Network}. \\ Esso ha due campi string \texttt{IP} e \texttt{SSID} (nome della rete WIFI). Inoltre c'è un campo status rappresentato dall'enum \texttt{Status} con varianti \texttt{(CONNECTED, DISCONNECTED, CONNECTING, ERROR)}
+    \item \texttt{setTheme(Theme theme)} che prende un enum Theme con varianti \texttt{(DARK, LIGHT, SYSTEM)}
 \end{itemize}
+Inoltre sarà necessario implementere l'override a \texttt{toString()} per poter stampare sulla console le impostazioni attuali usando questo formato:  \\ \\
+\texttt{Setting: \\
+Network: <STATUS> <IP> <SSID> (stampare i dati solo se status = CONNECTED) \\
+Theme: <THEME>
+}
 
-\subsubsection*{Mela}
-Ogni mela deve essere caratterizzata da:
-\begin{itemize}
-    \item Un attributo \texttt{Tipo}, che ne definisce la varietà e il costo implementato tramite un \texttt{enum} (\textit{Golden(5), Granny Smith(6), Stayman(4)}).
-    \item Un attributo \texttt{quantità} (intero).
-\end{itemize}
-
-\subsubsection*{Fruttivendolo (Factory)}
-Implementare la classe \texttt{Fruttivendolo} che espone i metodi statici per l'acquisto delle mele.
-\begin{itemize}
-    \item \textbf{Logica di acquisto:} Ogni metodo riceve in input un oggetto \texttt{Portafoglio} e la quantità di mele richieste
-    \item \textbf{Verifica Saldo:} 
-        \begin{itemize}
-            \item Se il saldo è \textbf{sufficiente}: viene detratto il costo e restituita l'istanza della mela.
-            \item Se il saldo è \textbf{insufficiente}: il metodo stampa un messaggio d'errore e restituisce \texttt{null}.
-        \end{itemize}
-\end{itemize}
-\newline
-\textit{Suggerimento: Per evitare la duplicazione di codice, si consiglia di implementare un metodo di utilità privato all'interno della classe \texttt{Fruttivendolo} che gestisca la validazione del saldo per tutti i tipi di mela.}
 \end{document}
