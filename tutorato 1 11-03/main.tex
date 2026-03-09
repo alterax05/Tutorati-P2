@@ -3,8 +3,10 @@
 \usepackage{minted}
 \usepackage[margin=2cm]{geometry}
 
+\usepackage{hyperref}
+
 \title{Tutorato Programmazione 2}
-\author{Michele Porcellato}
+\author{Michele Porcellato, Giacomo Vettore}
 \date{11 Marzo 2026}
 
 \begin{document}
@@ -12,6 +14,9 @@
 \maketitle
 
 \textbf{CREARE SCHELETRO PER ESERCIZI}
+
+\section{Note}
+In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{documentazione Java}. Sarà accessibile anche durante l'esame.
 
 \section{Esercizi Introduttivi}
 \subsection{Media, mediana e moda}
@@ -21,14 +26,23 @@ Scrivere un programma che legga da tastiera una sequenza di $n$ numeri interi (c
     \item \textbf{Mediana}: Il valore centrale della sequenza ordinata (o la media dei due centrali se $n$ è pari).
     \item \textbf{Moda}: Il valore che compare più frequentemente.
 \end{itemize}
-\textit{Suggerimento: Utilizzare \texttt{java.util.Arrays.sort()} per l'ordinamento.}
+Per ogni valore, creare una funzione apposita che prenda in input l'array e ritorni il risultato desiderato.
+\paragraph{\textit{Suggerimenti:}}
+\begin{itemize}
+    \item Utilizzare \texttt{Arrays.sort()} usando \texttt{import java.util.Arrays} per l'ordinamento.
+    \item Per la lettura dell'input usare la classe \texttt{Scanner}
+    \begin{minted}{java}
+Scanner sc = new Scanner(System.in);
+int n = sc.nextInt(); 
+    \end{minted}
+\end{itemize}
 
 \subsection{Stringa Palindroma}
-Implementare un metodo statico \texttt{isPalindrome(String s)} che restituisca un valore booleano. Il programma deve leggere una stringa dall'utente e determinare se è palindroma, ignorando la differenza tra maiuscole e minuscole e gli spazi bianchi.
+Implementare un metodo statico \texttt{isPalindroma(String s)} che restituisca un valore booleano. Il programma deve leggere una stringa dall'utente e determinare se è palindroma, ignorando la differenza tra maiuscole e minuscole e gli spazi bianchi.
 \begin{itemize}
     \item Esempio: "I topi non avevano nipoti" $\rightarrow$ \texttt{true}.
 \end{itemize}
-\textit{Suggerimento: Usare i metodi \texttt{replace()}, \texttt{toLowerCase()}} per aiutarvi con l'esercizio.
+\paragraph{\textit{Suggerimento}:} Usare i metodi \texttt{replace()}, \texttt{toLowerCase()} per aiutarvi con l'esercizio.
 
 \subsection{Bilanciamento delle Parentesi}
 Scrivere un programma che riceva in input una stringa composta da un'espressione matematica (con sole parentesi tonde). Eg: \texttt{(5+3)*2}. Il programma deve verificare se la sequenza è bilanciata correttamente.
