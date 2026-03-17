@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage[margin=2cm]{geometry}
+\usepackage{hyperref}
+
+\title{Tutorato Programmazione 2 }
+\author{Michele Porcellato, Giacomo Vettore}
+\date{18 Marzo 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Note}
+In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{documentazione Java}. Sarà accessibile anche durante l'esame. 
+\section{Esercizi}
+
+\subsection{Fornace: Incapsulamento e Invarianti}
+Creare una classe \texttt{Fornace} che modelli la cottura di un materiale. La classe deve nascondere il suo stato interno (Incapsulamento) per garantire che non si verifichino comportamenti anomali (Invarianti).
+\begin{itemize}
+    \item Definire due campi \texttt{private}: \texttt{carbone} (intero) e \texttt{temperatura} (intero).
+    \item La temperatura non può mai scendere sotto 0 o salire sopra 100. Il carbone non può essere negativo.
+    \item Implementare un metodo \texttt{aggiungiCarbone(int quantita)}. Se la quantità passata è negativa, il metodo non fa nulla e stampa un avviso.
+    \item Implementare un metodo \texttt{accendi()}. Se c'è almeno 1 di carbone, consuma 1 di carbone e imposta la temperatura a 100. Altrimenti, stampa "Nessun combustibile!".
+    \item Implementare un metodo \texttt{tick()}. Se la temperatura è maggiore di 0, la diminuisce di 10 ad ogni chiamata stampando il valore attuale. Se la temperatura raggiunge lo 0, stampa "Fornace spenta".
+\end{itemize}
+
+\subsection{Aliasing e Memory Layout}
+In Java, gli oggetti complessi vengono allocati nell'Heap e le variabili contengono solo i riferimenti (puntatori) a essi. Si consideri la seguente classe \texttt{Spada}:
+\begin{minted}{java}
+public class Spada {
+    public int durabilita;
+    public Spada(int d) { this.durabilita = d; }
+}
+\end{minted}
+Scrivere una classe \texttt{TestMemoria} contenente il \texttt{main}. All'interno del \texttt{main}:
+\begin{enumerate}
+    \item Istanziate \texttt{Spada spadaGiocatore = new Spada(50);}.
+    \item Assegnate \texttt{Spada spadaCassa = spadaGiocatore;} e modificate la durabilità di \texttt{spadaCassa} a 100.
+    \item Stampate la durabilità di \textbf{entrambe} le spade per dimostrare l'effetto dell'aliasing (modificandone una, si modifica anche l'altra perché puntano allo stesso oggetto).
+    \item Riscrivete l'istruzione al punto 2 creando una \textbf{nuova allocazione} per \texttt{spadaCassa} (usando \texttt{new}), dandole la stessa durabilità iniziale della spada del giocatore ma rendendola un oggetto indipendente. Dimostrate con delle stampe che ora modificare una non altera l'altra.
+\end{enumerate}
+
+\subsection{L'Arena: Ereditarietà, Upcasting e Polimorfismo}
+Creare una gerarchia di classi per rappresentare i combattenti di un'arena.
+\begin{itemize}
+    \item Creare una superclasse \texttt{Combattente} con:
+    \begin{itemize}
+        \item Due campi \texttt{protected}: \texttt{salute} (intero) e \texttt{nome} (String).
+        \item Un costruttore \texttt{Combattente(String nome, int salute)} che inizializza i campi.
+        \item Un metodo \texttt{public void subisciDanno(int danno)} che decrementa la salute.
+    \end{itemize}
+    \item Creare una sottoclasse \texttt{Cavaliere} che \texttt{extends Combattente}:
+    \begin{itemize}
+        \item Aggiungere un campo \texttt{private int armatura}.
+        \item Aggiungere un costruttore \texttt{Cavaliere(String nome, int salute, int armatura)} che richiama il costruttore della superclasse usando \texttt{super(...)} e inizializza l'armatura.
+        \item Fare l'\texttt{@Override} del metodo \texttt{subisciDanno(int danno)}. Il Cavaliere riduce il danno in arrivo di un valore pari alla sua armatura (il danno finale non può essere negativo) prima di sottrarlo alla salute.
+    \end{itemize}
+    \item \textbf{Nel \texttt{main}:} Creare un array di tipo \texttt{Combattente} di dimensione 3. Inserite un \texttt{Combattente} generico e due \texttt{Cavaliere} (sfruttando il polimorfismo di sottotipo / upcasting). Iterare sull'array con un ciclo \texttt{for} e invocare \texttt{subisciDanno(15)} su ogni elemento, stampando la salute rimanente di ciascuno.
+\end{itemize}
+
+\subsection{Coordinate: Static e Override di Object}
+Ogni classe in Java estende tacitamente la classe suprema \texttt{Object}. 
+Si implementi una classe \texttt{Punto3D} con tre campi \texttt{private} interi: \texttt{x}, \texttt{y}, \texttt{z}.
+\begin{itemize}
+    \item Aggiungere un campo \texttt{private static int contatorePunti = 0} che tenga traccia di quanti punti sono stati instanziati in totale nell'intero programma.
+    \item Creare un costruttore che inizializzi le coordinate e incrementi correttamente il contatore globale.
+    \item Aggiungere un metodo \texttt{public static int getNumeroPunti()} che restituisca il valore del contatore. Nel \texttt{main}, create 4 punti e stampate il risultato di questo metodo invocandolo direttamente sulla classe \newline(\texttt{Punto3D.getNumeroPunti()}).
+    \item Fare l'\texttt{@Override} del metodo \texttt{toString()} (ereditato da \texttt{Object}) in modo che, se si prova a stampare un oggetto Punto3D nel \texttt{main}, restituisca una stringa formattata così: \texttt{"Punto: [x, y, z]"}.
+\end{itemize}
+
+\subsection{Polimorfismo e Invarianti}
+
+\begin{itemize}
+    \item Creare una superclasse \texttt{Item} con un campo \texttt{protected String nome}. Creare il costruttore e un metodo \texttt{public void usa()} che stampa a video: "Uso l'oggetto generico: [nome]".
+    \item Creare una sottoclasse \texttt{Arma} che estende \texttt{Item}. Aggiungere un campo \texttt{private final int danno} (il danno non può mutare). Creare il costruttore usando \texttt{super(...)}. Fare l'\texttt{Override} del metodo \texttt{usa()} in modo che stampi: "Attacco con [nome] infliggendo [danno] danni!".
+    \item Creare una sottoclasse \texttt{Pozione} che estende \texttt{Item}. Aggiungere un campo \texttt{private int dosi}. Creare il costruttore usando \texttt{super(...)}. Fare l'\texttt{Override} del metodo \texttt{usa()}: se ci sono dosi, decrementa di 1 e stampa "Bevi [nome]. Dosi rimaste: [dosi]". Se le dosi sono 0, non fa nulla e stampa "La pozione è vuota!" (Invariante).
+    \item Creare un array di tipo \texttt{Item} di dimensione 3.
+    \item Inserire nell'array un \texttt{Item} base, un'\texttt{Arma} e una \texttt{Pozione} (impostando 2 dosi).
+    \item Scrivere un ciclo \texttt{for} che itera sull'intero array invocando il metodo \texttt{usa()} su ogni elemento per testare l'avvenuto Override.
+    \item Fuori dal ciclo, estrarre la \texttt{Pozione} dall'array e richiamare il metodo \texttt{usa()} altre due volte per dimostrare che l'invariante blocchi l'uso quando le dosi scendono a zero.
+\end{itemize}
+
+\end{document}
