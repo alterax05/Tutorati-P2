@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{minted}
+\usepackage[margin=2cm]{geometry}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+\title{Tutorato Programmazione 2}
+\author{Michele Porcellato, Giacomo Vettore}
+\date{25 Marzo 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Note}
+In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{documentazione Java}. Sarà accessibile anche durante l'esame.
+
+\section{Esercizi}
+
+\subsection{Flatland}
+
+\textit{Flatland: A Romance of Many Dimensions}\footnotemark è un romanzo satirico che parla della vita a Flatland un modo bidimensionale nel quale gli abitanti sono poligoni oppure segmenti di rette. Nel romanzo è anche presente un altro mondo chiamato Lineland, a Lineland gli abitanti sono punti e rette, i quali non posseggono il concetto di bidimensionalità di Flatland.
+
+\footnotetext{\url{https://en.wikipedia.org/wiki/Flatland}}
+
+\subsubsection{Specifiche}
+
+Create un sub-package chiamato \texttt{flatland} nel quale andrete a definire:
+
+\begin{itemize}
+    \item Definite la classe astratta \texttt{Lander}:
+    \begin{itemize}
+        \item \texttt{protected int nDimensioni;}
+        \item \texttt{public abstract void reameDimensionale();}
+        \item \texttt{public boolean compare(Lander otherLander)} un metodo concreto che deve ritornare \texttt{true} se l'istanza chiamante ha più dimensioni di \texttt{otherLander}.
+    \end{itemize}
+    
+    \item Create la classe \texttt{Flatlander} che estenda \texttt{Lander} e sia definita come:
+    \begin{itemize}
+        \item \texttt{private Genere genere} i Flatlander possono essere segmenti di rette oppure poligoni; \item \texttt{private int lati;}
+        \item \texttt{public Flatlander(Genere genere, int lati)} che istanzi la classe assegnando il genere, il numero di dimensioni a 2 e, se genere è Poligono, assegni il numero di lati a lati altrimenti assegni 0;
+        \item \texttt{reameDimensionale} deve stampare la stringa "Sono un Flatlander \texttt{<genere>} quindi ho \texttt{<lati>} lati e \texttt{<nDimensioni>} dimensioni";
+        \item \texttt{public boolean isGenitore(Lander possibleParent)} che ritorni True se il chiamante ha genere Poligono, \texttt{possibleParent} è un'istanza di Flatlander e \texttt{possibleParent} ha un lato in meno del chiamante.
+    \end{itemize}
+    
+    \item Create la classe \texttt{Linelander} che estenda \texttt{Lander} e sia definita come:
+    \begin{itemize}
+        \item \texttt{private Genere genere} i Linelander possono essere rette oppure punti;
+        \item \texttt{public Linelander(Genere genere)} che istanzi la classe assegnando il genere e il numero di dimensioni a 1;
+        \item Un costruttore di default che istanzi un Linelander con genere Punto e dimensione 1;
+        \item \texttt{reameDimensionale} deve stampare la stringa "Sono un Linelander \texttt{<genere>} quindi ho \texttt{<nDimensioni>} dimensione".
+    \end{itemize}
+\end{itemize}
+Qui il file Main.java per iniziare.
+
+\subsection{Le macchinette di Povo}
+
+Si implementi il funzionamento di una macchinetta del caffè utilizzando lo \textit{Strategy Pattern.}
+
+Si crei:
+\begin{itemize}
+    \item Un'interfaccia \texttt{Bevanda} con metodo \texttt{prepara} che prenda in input \texttt{int sugar} e un metodo \texttt{double getCosto()} che ritorni il costo effettivo della bevanda;
+    \item Una serie di classi che implementino l'interfaccia \texttt{Bevanda} (té, espresso, cappuccino);
+    \item Un'interfaccia \texttt{Credito} che astragga il metodo di pagamento. Essa avrà il metodo \texttt{bool paga(double costo)} che ritornerà \texttt{true} solo se il pagamento va a buon fine;
+    \item Una serie di classi che implementino l'interfaccia \texttt{Credito} (moneta, app, carta di credito);
+    \item Una classe \texttt{Macchinetta} che permetta di ordinare una bevanda. Implementare i metodi \texttt{setBevanda(Bevanda)} e \texttt{ordina()};
+\end{itemize}
+Prima di procedere con l'ordine la macchinetta deve controllare di avere credito a sufficienza e poi dispensare il prodotto. \\
+Si richiede di leggere il credito disponibile da input. \\
+Alla fine della transazione, la macchinetta deve ritornare allo stato originale, non permettendo di ordinare di nuovo senza prima scegliere la bevanda e il metodo di pagamento. \\
+\\
+\textbf{Importante!} Ricordarsi di dividere l'esercizio in packages.
+
+\subsubsection*{Esempio output}
+
+\begin{tcolorbox}
+    Selezionare bevanda (1. Thè, 2. Caffè, 3. Cappuccino): \textbf{2} \\
+    Selezionare il livello di zucchero: \textbf{3} \\
+    Selezionare metodo di pagamento: (1. Moneta, 2. App, 3. Carta di Credito): \textbf{2} \\
+    Inserire credito disponibile: \textbf{3.54} \\
+     -- Pagamento eseguito con successo! --\\
+     -- In preparazione... --\\
+     -- Trituro il caffè, scaldo l'acqua, verso il caffè... -- \\
+    Ecco il suo caffè!
+\end{tcolorbox}
+
+\subsubsection*{Facoltativo}
+
+Nel caso la macchinetta non abbia nulla di selezionato, al posto di usare una serie di check per verificare se Bevanda o Credito siano uguali a \texttt{null}, potreste usare il \href{https://refactoring.guru/introduce-null-object}{\textit{Null Object Pattern}}. \\
+Esso consiste nel creare un oggetto che esibisca il comportamento di default (ossia nel nostro caso, non fare nulla).
+
+\end{document}
