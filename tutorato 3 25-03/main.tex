@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{minted}
-\usepackage[margin=2cm]{geometry}
+\usepackage[a4paper, margin=2cm]{geometry}
 \usepackage{tcolorbox}
 \usepackage{hyperref}
 
@@ -34,20 +34,20 @@ Create un sub-package chiamato \texttt{flatland} nel quale andrete a definire:
         \item \texttt{protected int nDimensioni;}
         \item \texttt{public abstract void reameDimensionale();}
         \item \texttt{public boolean compare(Lander otherLander)} un metodo concreto che deve ritornare \texttt{true} se l'istanza chiamante ha più dimensioni di \texttt{otherLander}.
+        \item \texttt{protected Lander(nDimensioni)}
     \end{itemize}
     
     \item Create la classe \texttt{Flatlander} che estenda \texttt{Lander} e sia definita come:
     \begin{itemize}
         \item \texttt{private Genere genere} i Flatlander possono essere segmenti di rette oppure poligoni; \item \texttt{private int lati;}
-        \item \texttt{public Flatlander(Genere genere, int lati)} che istanzi la classe assegnando il genere, il numero di dimensioni a 2 e, se genere è Poligono, assegni il numero di lati a lati altrimenti assegni 0;
+        \item \texttt{public Flatlander(Genere genere, int lati)} che istanzi la classe assegnando il genere, il numero di dimensioni a 2 (richiamando il costruttore della classe Lander) e, se genere è Poligono, assegni il numero di lati a lati altrimenti assegni 0;
         \item \texttt{reameDimensionale} deve stampare la stringa "Sono un Flatlander \texttt{<genere>} quindi ho \texttt{<lati>} lati e \texttt{<nDimensioni>} dimensioni";
-        \item \texttt{public boolean isGenitore(Lander possibleParent)} che ritorni True se il chiamante ha genere Poligono, \texttt{possibleParent} è un'istanza di Flatlander e \texttt{possibleParent} ha un lato in meno del chiamante.
     \end{itemize}
     
     \item Create la classe \texttt{Linelander} che estenda \texttt{Lander} e sia definita come:
     \begin{itemize}
         \item \texttt{private Genere genere} i Linelander possono essere rette oppure punti;
-        \item \texttt{public Linelander(Genere genere)} che istanzi la classe assegnando il genere e il numero di dimensioni a 1;
+        \item \texttt{public Linelander(Genere genere)} che istanzi la classe assegnando il genere e il numero di dimensioni a 1 (sempre richiamando il costruttore della classe Lander);
         \item Un costruttore di default che istanzi un Linelander con genere Punto e dimensione 1;
         \item \texttt{reameDimensionale} deve stampare la stringa "Sono un Linelander \texttt{<genere>} quindi ho \texttt{<nDimensioni>} dimensione".
     \end{itemize}
@@ -60,15 +60,28 @@ Si implementi il funzionamento di una macchinetta del caffè utilizzando lo \tex
 
 Si crei:
 \begin{itemize}
-    \item Un'interfaccia \texttt{Bevanda} con metodo \texttt{prepara} che prenda in input \texttt{int sugar} e un metodo \texttt{double getCosto()} che ritorni il costo effettivo della bevanda;
-    \item Una serie di classi che implementino l'interfaccia \texttt{Bevanda} (té, espresso, cappuccino);
-    \item Un'interfaccia \texttt{Credito} che astragga il metodo di pagamento. Essa avrà il metodo \texttt{bool paga(double costo)} che ritornerà \texttt{true} solo se il pagamento va a buon fine;
-    \item Una serie di classi che implementino l'interfaccia \texttt{Credito} (moneta, app, carta di credito);
-    \item Una classe \texttt{Macchinetta} che permetta di ordinare una bevanda. Implementare i metodi \texttt{setBevanda(Bevanda)} e \texttt{ordina()};
+    \item Un'interfaccia \texttt{Bevanda} con metodi:
+    \begin{itemize}
+        \item \texttt{void prepara(int sugar)} che stampi i passaggi specifici per ottenere la bevanda
+        \item \texttt{double getCosto()} che ritorni il costo effettivo della bevanda
+    \end{itemize}
+    \item Una serie di classi (\texttt{Té}, \texttt{Espresso}, \texttt{Cappuccino}) che implementino l'interfaccia \texttt{Bevanda}.;
+    \item Un'interfaccia \texttt{Credito} che astragga il metodo di pagamento con i seguenti metodi:
+    \begin{itemize}
+        \item \texttt{bool paga(double costo)} che ritornerà \texttt{true} solo se il pagamento va a buon fine. In caso ciò non succeda, stampare a video un messaggio d'errore.
+    \end{itemize}
+    \item Una serie di classi che implementino l'interfaccia \texttt{Credito} (\texttt{Moneta}, \texttt{App}, \texttt{CartaDiCredito}). Ognuna di queste classi avrà un attributo \texttt{private double saldo};
+    \item Una classe \texttt{Macchinetta} che permetta di ordinare una bevanda. Implementare i metodi:
+    \begin{itemize}
+        \item \texttt{setBevanda(Bevanda b)}
+        \item \texttt{setCredito(Credito c)}
+        \item \texttt{ordina(int sugar)} che verrà chiamato per ordinare la bevanda.
+    \end{itemize}
 \end{itemize}
 Prima di procedere con l'ordine la macchinetta deve controllare di avere credito a sufficienza e poi dispensare il prodotto. \\
 Si richiede di leggere il credito disponibile da input. \\
 Alla fine della transazione, la macchinetta deve ritornare allo stato originale, non permettendo di ordinare di nuovo senza prima scegliere la bevanda e il metodo di pagamento. \\
+Gestire le interazioni con l'utente nel Main, separandole dalla classe \texttt{Macchinetta} \\
 \\
 \textbf{Importante!} Ricordarsi di dividere l'esercizio in packages.
 
@@ -78,16 +91,25 @@ Alla fine della transazione, la macchinetta deve ritornare allo stato originale,
     Selezionare bevanda (1. Thè, 2. Caffè, 3. Cappuccino): \textbf{2} \\
     Selezionare il livello di zucchero: \textbf{3} \\
     Selezionare metodo di pagamento: (1. Moneta, 2. App, 3. Carta di Credito): \textbf{2} \\
-    Inserire credito disponibile: \textbf{3.54} \\
+    Inserire credito disponibile: \textbf{3,54} \\
      -- Pagamento eseguito con successo! --\\
      -- In preparazione... --\\
      -- Trituro il caffè, scaldo l'acqua, verso il caffè... -- \\
     Ecco il suo caffè!
 \end{tcolorbox}
 
+\begin{tcolorbox}
+    Selezionare bevanda (1. Te, 2. Caffe, 3. Cappuccino): \textbf{1} \\
+    Selezionare il livello di zucchero: \textbf{1} \\
+    Selezionare metodo di pagamento (1. Moneta, 2. App, 3. Carta di Credito): \textbf{1} \\
+    Inserire credito disponibile: \textbf{0,5} \\
+    Credito insufficiente (moneta). Disponibile: \textbf{0.5} \\
+    Ordine annullato.
+\end{tcolorbox}
+
 \subsubsection*{Facoltativo}
 
 Nel caso la macchinetta non abbia nulla di selezionato, al posto di usare una serie di check per verificare se Bevanda o Credito siano uguali a \texttt{null}, potreste usare il \href{https://refactoring.guru/introduce-null-object}{\textit{Null Object Pattern}}. \\
-Esso consiste nel creare un oggetto che esibisca il comportamento di default (ossia nel nostro caso, non fare nulla).
+Esso consiste nel creare un oggetto che esibisca il comportamento di default (ossia, nel nostro caso, stampare a video un errore).
 
 \end{document}
