@@ -19,7 +19,7 @@ public class Studente implements ScontoStrategy {
     }
 
     @Override
-    public String getDescrizione() {
+    public String toString() {
         if (this.isMagistrale) {
             return " " + this.universita + " LM";
         } else {

@@ -19,7 +19,7 @@ public class Atleta implements ScontoStrategy {
     }
 
     @Override
-    public String getDescrizione() {
+    public String toString() {
         if (this.isInternazionale) {
             return " " + this.sport + " internazionale";
         } else {

@@ -8,8 +8,8 @@ public class Abbonato {
 
     private static final double TARIFFA_BASE = 1000.0;
 
-    private ScontoStrategy[] categorie;
-    private int numCategorie;
+    private ScontoStrategy[] strategie;
+    private int numStrategie;
 
     public Abbonato(String cognome, String nome, String codiceFiscale, int annoNascita) {
         if (annoNascita > 2026) {
@@ -21,23 +21,34 @@ public class Abbonato {
         this.cognome = cognome;
         this.nome = nome;
         this.codiceFiscale = codiceFiscale;
-        this.categorie = new ScontoStrategy[5];
-        this.numCategorie = 0;
+        this.strategie = new ScontoStrategy[2]; // Max 2 strategie previste dalla traccia
+        this.numStrategie = 0;
     }
 
-    public void aggiungiCategoria(ScontoStrategy c) {
-        if (this.numCategorie < this.categorie.length) {
-            this.categorie[this.numCategorie] = c;
-            this.numCategorie++;
+    public void aggiungiStrategia(ScontoStrategy s) {
+        if (this.numStrategie < this.strategie.length) {
+            this.strategie[this.numStrategie] = s;
+            this.numStrategie++;
         }
     }
 
-    public ScontoStrategy[] getCategorie() {
-        ScontoStrategy[] attive = new ScontoStrategy[this.numCategorie];
-        for (int i = 0; i < this.numCategorie; i++) {
-            attive[i] = this.categorie[i];
+    // Metodi per mantenere l'incapsulamento
+    public boolean isStudente() {
+        for (int i = 0; i < this.numStrategie; i++) {
+            if (this.strategie[i] instanceof Studente) {
+                return true;
+            }
         }
-        return attive;
+        return false;
+    }
+
+    public boolean isAtleta() {
+        for (int i = 0; i < this.numStrategie; i++) {
+            if (this.strategie[i] instanceof Atleta) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public double calcolaTariffa() {
@@ -47,10 +58,10 @@ public class Abbonato {
             tariffaMinima = TARIFFA_BASE * 0.65;
         }
 
-        for (int i = 0; i < this.numCategorie; i++) {
-            double tariffaCategoria = this.categorie[i].applicaSconto(TARIFFA_BASE);
-            if (tariffaCategoria < tariffaMinima) {
-                tariffaMinima = tariffaCategoria;
+        for (int i = 0; i < this.numStrategie; i++) {
+            double tariffaStrategia = this.strategie[i].applicaSconto(TARIFFA_BASE);
+            if (tariffaStrategia < tariffaMinima) {
+                tariffaMinima = tariffaStrategia;
             }
         }
 
@@ -65,8 +76,8 @@ public class Abbonato {
     public String toString() {
         String base = this.cognome + " " + this.nome + " " + this.codiceFiscale + " " + this.annoNascita;
 
-        for (int i = 0; i < this.numCategorie; i++) {
-            base += this.categorie[i].getDescrizione();
+        for (int i = 0; i < this.numStrategie; i++) {
+            base += this.strategie[i].toString();
         }
 
         base += " | tariffa: " + this.calcolaTariffa();
