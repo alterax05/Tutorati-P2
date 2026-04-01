@@ -1,29 +1,24 @@
 package es1;
 
-public class Atleta implements ScontoStrategy {
-    private String sport;
-    private boolean isInternazionale;
+public class Atleta implements Categoria {
+    public enum Rilevanza { NAZIONALE, INTERNAZIONALE }
 
-    public Atleta(String sport, boolean isInternazionale) {
-        this.sport = sport;
-        this.isInternazionale = isInternazionale;
+    private String disciplina;
+    private Rilevanza rilevanza;
+
+    public Atleta(String disciplina, Rilevanza rilevanza) {
+        this.disciplina = disciplina;
+        this.rilevanza = rilevanza;
     }
 
     @Override
     public double applicaSconto(double tariffaBase) {
-        if (this.isInternazionale) {
-            return tariffaBase - (tariffaBase * 0.50);
-        } else {
-            return tariffaBase - (tariffaBase * 0.30);
-        }
+        double sconto = (rilevanza == Rilevanza.INTERNAZIONALE) ? 0.50 : 0.30;
+        return tariffaBase * (1 - sconto);
     }
 
     @Override
     public String toString() {
-        if (this.isInternazionale) {
-            return " " + this.sport + " internazionale";
-        } else {
-            return " " + this.sport + " nazionale";
-        }
+        return " " + disciplina + " " + rilevanza;
     }
 }

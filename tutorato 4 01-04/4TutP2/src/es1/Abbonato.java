@@ -1,86 +1,58 @@
 package es1;
 
 public class Abbonato {
-    private String cognome;
-    private String nome;
-    private String codiceFiscale;
+    private String cognome, nome, cf;
     private int annoNascita;
 
+    // Costanti
     private static final double TARIFFA_BASE = 1000.0;
+    private static final int TH_SENIOR = 1968;
+    private static final double SCONTO_SENIOR = 0.35;
 
-    private ScontoStrategy[] strategie;
-    private int numStrategie;
+    private Categoria[] categorie = new Categoria[2];
+    private int numCategorie = 0;
 
-    public Abbonato(String cognome, String nome, String codiceFiscale, int annoNascita) {
-        if (annoNascita > 2026) {
-            this.annoNascita = 2026;
-        } else {
-            this.annoNascita = annoNascita;
-        }
-
+    public Abbonato(String cognome, String nome, String cf, int annoNascita) {
         this.cognome = cognome;
         this.nome = nome;
-        this.codiceFiscale = codiceFiscale;
-        this.strategie = new ScontoStrategy[2]; // Max 2 strategie previste dalla traccia
-        this.numStrategie = 0;
+        this.cf = cf;
+        this.annoNascita = (annoNascita > 2026) ? 2026 : annoNascita;
     }
 
-    public void aggiungiStrategia(ScontoStrategy s) {
-        if (this.numStrategie < this.strategie.length) {
-            this.strategie[this.numStrategie] = s;
-            this.numStrategie++;
+    public void aggiungiCategoria(Categoria c) {
+        if (numCategorie < categorie.length) {
+            categorie[numCategorie++] = c;
         }
     }
 
-    // Metodi per mantenere l'incapsulamento
     public boolean isStudente() {
-        for (int i = 0; i < this.numStrategie; i++) {
-            if (this.strategie[i] instanceof Studente) {
-                return true;
-            }
-        }
+        for (int i = 0; i < numCategorie; i++)
+            if (categorie[i] instanceof Studente) return true;
         return false;
     }
 
     public boolean isAtleta() {
-        for (int i = 0; i < this.numStrategie; i++) {
-            if (this.strategie[i] instanceof Atleta) {
-                return true;
-            }
-        }
+        for (int i = 0; i < numCategorie; i++)
+            if (categorie[i] instanceof Atleta) return true;
         return false;
     }
 
     public double calcolaTariffa() {
-        double tariffaMinima = TARIFFA_BASE;
+        double minima = (annoNascita < TH_SENIOR) ? TARIFFA_BASE * (1 - SCONTO_SENIOR) : TARIFFA_BASE;
 
-        if (this.annoNascita < 1968) {
-            tariffaMinima = TARIFFA_BASE * 0.65;
+        // Confrontiamo con gli sconti delle categorie
+        for (int i = 0; i < numCategorie; i++) {
+            double t = categorie[i].applicaSconto(TARIFFA_BASE);
+            if (t < minima) minima = t;
         }
-
-        for (int i = 0; i < this.numStrategie; i++) {
-            double tariffaStrategia = this.strategie[i].applicaSconto(TARIFFA_BASE);
-            if (tariffaStrategia < tariffaMinima) {
-                tariffaMinima = tariffaStrategia;
-            }
-        }
-
-        if (tariffaMinima < 0) {
-            return 0.0;
-        }
-
-        return tariffaMinima;
+        return minima;
     }
 
     @Override
     public String toString() {
-        String base = this.cognome + " " + this.nome + " " + this.codiceFiscale + " " + this.annoNascita;
-
-        for (int i = 0; i < this.numStrategie; i++) {
-            base += this.strategie[i].toString();
-        }
-
-        base += " | tariffa: " + this.calcolaTariffa();
-        return base;
+        StringBuilder sb = new StringBuilder(cognome + " " + nome + " " + cf + " " + annoNascita);
+        for (int i = 0; i < numCategorie; i++) sb.append(categorie[i].toString());
+        sb.append(" | tariffa: ").append(calcolaTariffa());
+        return sb.toString();
     }
 }

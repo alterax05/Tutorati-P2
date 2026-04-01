@@ -1,29 +1,24 @@
 package es1;
 
-public class Studente implements ScontoStrategy {
-    private String universita;
-    private boolean isMagistrale;
+public class Studente implements Categoria {
+    public enum Laurea { LT, LM }
 
-    public Studente(String universita, boolean isMagistrale) {
+    private String universita;
+    private Laurea tipoLaurea;
+
+    public Studente(String universita, Laurea tipoLaurea) {
         this.universita = universita;
-        this.isMagistrale = isMagistrale;
+        this.tipoLaurea = tipoLaurea;
     }
 
     @Override
     public double applicaSconto(double tariffaBase) {
-        if (this.isMagistrale) {
-            return tariffaBase - (tariffaBase * 0.20);
-        } else {
-            return tariffaBase - (tariffaBase * 0.40);
-        }
+        double sconto = (tipoLaurea == Laurea.LM) ? 0.20 : 0.40;
+        return tariffaBase * (1 - sconto);
     }
 
     @Override
     public String toString() {
-        if (this.isMagistrale) {
-            return " " + this.universita + " LM";
-        } else {
-            return " " + this.universita + " LT";
-        }
+        return " " + universita + " " + tipoLaurea;
     }
 }
