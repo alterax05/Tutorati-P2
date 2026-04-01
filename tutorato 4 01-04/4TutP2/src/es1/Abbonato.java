@@ -25,17 +25,6 @@ public class Abbonato {
         }
     }
 
-    public boolean isStudente() {
-        for (int i = 0; i < numCategorie; i++)
-            if (categorie[i] instanceof Studente) return true;
-        return false;
-    }
-
-    public boolean isAtleta() {
-        for (int i = 0; i < numCategorie; i++)
-            if (categorie[i] instanceof Atleta) return true;
-        return false;
-    }
 
     public double calcolaTariffa() {
         double minima = (annoNascita < TH_SENIOR) ? TARIFFA_BASE * (1 - SCONTO_SENIOR) : TARIFFA_BASE;

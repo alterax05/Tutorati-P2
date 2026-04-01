@@ -40,19 +40,5 @@ public class Main {
         for (int i = 0; i < archivio.length; i++) {
             System.out.println(archivio[i].toString());
         }
-
-        System.out.println("\n===== FILTRO: SOLI STUDENTI =====");
-        for (int i = 0; i < archivio.length; i++) {
-            if (archivio[i].isStudente()) {
-                System.out.println(archivio[i].toString());
-            }
-        }
-
-        System.out.println("\n===== FILTRO: SOLI ATLETI =====");
-        for (int i = 0; i < archivio.length; i++) {
-            if (archivio[i].isAtleta()) {
-                System.out.println(archivio[i].toString());
-            }
-        }
     }
 }
