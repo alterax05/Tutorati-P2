@@ -7,7 +7,7 @@
 
 \title{Tutorato Programmazione 2}
 \author{Michele Porcellato, Giacomo Vettore}
-\date{7 Aprile 2026}
+\date{8 Aprile 2026}
 
 \begin{document}
 
@@ -23,23 +23,22 @@ I ventilatori contengono queste informazioni: marca e costo. Inoltre si differen
 \newline
 Le tipologie di ventilatori sono: 
 \begin{itemize}
-    \item A piantana \(+10\)
-    \item A parete \(+20\)
-    \item A soffitto \(+2\)
+    \item A piantana (\(+10\))
+    \item A parete (\(+20\))
+    \item A soffitto (\(+2\))
 \end{itemize}
-\newline
 I tipi di alimentazione sono: 
 \begin{itemize}
-    \item Meccanici \(\times1\)
+    \item Meccanici (\(\times1\))
     \item Elettrici, che si dividno in 
     \begin{itemize}
-        \item A Presa \(\times2\)
-        \item A batteria \(\times3\)
+        \item A Presa (\(\times2\))
+        \item A batteria (\(\times3\))
     \end{itemize}
 \end{itemize}
 I ventilatori a soffitto \textbf{non} possono essere meccanici.
 \newline
-In alto viene mostrato il capitale dell'utente (inizializzato a 100), il costo totale mensile degli abbonamenti (inizializzato a 0) e il numero di mesi trascorsi (inizializzato a 0).
+In alto viene mostrato il capitale dell'utente (inizializzato a 1000), il costo totale mensile degli abbonamenti (inizializzato a 0) e il numero di mesi trascorsi (inizializzato a 0).
 \newline
 Dopo di che verranno stampati a video i vari ventilatori.
 Per selezionare un ventilatore e abbonarsi, basterà digitare il numero corrispondente.
@@ -69,5 +68,70 @@ Se l'utente non ha abbastanza fondi, viene stampato un messaggio di errore sulla
     \item Si usi, quando evidente/utile, una gerarchia di ereditarietà.
     \item Si usino costanti ove ragionevole, e si badi alla pulizia del codice, evitando duplicazioni e codice inutilmente complesso.
 \end{itemize}
+
+\subsection*{Esempio 1}
+\begin{tcolorbox}
+---------------------------------------- \\
+Capitale: 1000 \\
+Costo totale mensile abbonamenti: 0 \\
+Mesi trascorsi: 0 \\
+---------------------------------------- \\
+Ventilatori disponibili: \\
+1) Ariete \\
+Tipo: Piantana Alimentazione: Batteria \\
+Costo: 60 \\
+2) Bosch \\
+Tipo: Parete Alimentazione: Presa \\
+Costo: 60 \\
+3) Bosch \\
+Tipo: Parete Alimentazione: Meccanica \\
+Costo: 30 \\
+4) Bosch \\
+Tipo: Soffitto Alimentazione: Batteria \\
+Costo: 36 \\
+5) Parkside \\
+Tipo: Soffitto Alimentazione: Presa \\
+Costo: 24 \\
+---------------------------------------- \\
+Seleziona il numero di un ventilatore per abbonarti. \\
+Premi Invio senza scrivere nulla per passare al mese successivo. \\
+\(>\) \texttt{1} \\
+Abbonamento aggiunto. Nuovo costo mensile: 60. \\
+\end{tcolorbox}
+
+\subsection*{Esempio 2}
+\begin{tcolorbox}
+---------------------------------------- \\
+Capitale: 160 \\
+Costo totale mensile abbonamenti: 210 \\
+Mesi trascorsi: 4 \\
+---------------------------------------- \\
+Ventilatori disponibili: \\
+1) Ariete \\
+Tipo: Piantana Alimentazione: Batteria \\
+Costo: 60 \\
+2) Bosch \\
+Tipo: Parete Alimentazione: Presa \\
+Costo: 60 \\
+3) Bosch \\
+Tipo: Parete Alimentazione: Meccanica \\
+Costo: 30 \\
+4) Bosch \\
+Tipo: Soffitto Alimentazione: Batteria \\ 
+Costo: 36 \\
+5) Parkside \\
+Tipo: Soffitto Alimentazione: Presa \\
+Costo: 24 \\
+---------------------------------------- \\
+Seleziona il numero di un ventilatore per abbonarti. \\
+Premi Invio senza scrivere nulla per passare al mese successivo. \\
+\(>\) \\
+Errore: fondi insufficienti per pagare gli abbonamenti mensili.\\
+\end{tcolorbox}
+
+\subsection*{Suggerimenti}
+La soluzione proposta usa MVC. All'esame sarà richiesto ma per ora è possibile svolgere l'esercizio anche senza.
+\newline
+Si consiglia di implementare una classe \texttt{Utente}, per gestire il saldo e una classe \texttt{Vetrina}, per mostrare i ventilatori disponibili.
 
 \end{document}
