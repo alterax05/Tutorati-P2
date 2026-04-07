@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{minted}
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+\title{Tutorato Programmazione 2}
+\author{Michele Porcellato, Giacomo Vettore}
+\date{7 Aprile 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Note}
+In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{\textit{documentazione Java}}. Sarà accessibile anche durante l'esame.
+
+\section{Esercizi}
+\subsection{SoloVentilatori}
+Si progetti \textbf{Solo Ventilatori}, una applicazione dove ventilatori diversi possono pubblicizzarsi, e dove gli utenti possono selezionare a quali ventilatori abbonarsi.
+I ventilatori contengono queste informazioni: marca e costo. Inoltre si differenziano per tipologia e alimentazione, e questo influisce sul loro costo di abbonamento, che parte da 10 e si influenza con quanto scritto tra parentesi di sotto.
+\newline
+Le tipologie di ventilatori sono: 
+\begin{itemize}
+    \item A piantana \(+10\)
+    \item A parete \(+20\)
+    \item A soffitto \(+2\)
+\end{itemize}
+\newline
+I tipi di alimentazione sono: 
+\begin{itemize}
+    \item Meccanici \(\times1\)
+    \item Elettrici, che si dividno in 
+    \begin{itemize}
+        \item A Presa \(\times2\)
+        \item A batteria \(\times3\)
+    \end{itemize}
+\end{itemize}
+I ventilatori a soffitto \textbf{non} possono essere meccanici.
+\newline
+In alto viene mostrato il capitale dell'utente (inizializzato a 100), il costo totale mensile degli abbonamenti (inizializzato a 0) e il numero di mesi trascorsi (inizializzato a 0).
+\newline
+Dopo di che verranno stampati a video i vari ventilatori.
+Per selezionare un ventilatore e abbonarsi, basterà digitare il numero corrispondente.
+Per passare al mese successivo, basta cliccare \texttt{Invio}.
+Passando al mese successivo, vengono scalati i fondi degli abbonamenti dal capitale dell'utente.
+\newline
+I tipi di ventilatori saranno i seguenti:
+\begin{itemize}
+    \item \textbf{Ariete} \\
+    Tipo: Piantana Alimentazione: Batteria \\
+    Costo: 60
+    \item \textbf{Bosch} \\
+    Tipo: Parete Alimentazione: Presa \\
+    Costo: 60
+    \item \textbf{Bosch} \\
+    Tipo: Parete Alimentazione: Meccanica \\
+    Costo: 30
+    \item \textbf{Bosch} \\
+    Tipo: Soffitto Alimentazione: Batteria \\
+    Costo: 36
+    \item \textbf{Parkside} \\
+    Tipo: Soffitto Alimentazione: Presa \\
+    Costo: 24
+\end{itemize}
+Se l'utente non ha abbastanza fondi, viene stampato un messaggio di errore sulla console.
+\begin{itemize}
+    \item Si usi, quando evidente/utile, una gerarchia di ereditarietà.
+    \item Si usino costanti ove ragionevole, e si badi alla pulizia del codice, evitando duplicazioni e codice inutilmente complesso.
+\end{itemize}
+
+\end{document}
