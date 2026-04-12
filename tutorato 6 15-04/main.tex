@@ -1,0 +1,130 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox} % Aggiunto per i riquadri
+\usepackage{hyperref}  % Aggiunto per i link
+
+\geometry{margin=2.5cm}
+
+\title{Tutorato Programmazione 2}
+\author{Michele Porcellato, Giacomo Vettore}
+\date{15 Aprile 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Note}
+In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{\textit{documentazione Java}}. Sarà accessibile anche durante l'esame.
+
+\section{Esercizi}
+
+\subsection{QuestLog}
+Si progetti \textbf{QuestLog}, un'applicazione dove selezionare e risolvere diverse Quests per Geraldo da Ravina (TN).
+
+Tutte le Quests hanno un nome, un livello minimo, una tipologia e una ricompensa, cioè la quantità di denaro che si guadagna risolvendole. Esistono le seguenti tipologie di Quests, che aggiungono caratteristiche specifiche:
+
+\begin{itemize}
+    \item \textbf{Main}: indicano anche il Luogo dove avvengono. Tutte le Main Quests danno 10 di ricompensa. Inoltre, ognuna di queste Quest indica la sua prossima, a meno che non sia la Quest finale (la prossima è \texttt{null}). Per risolvere una Main Quest bisogna aver risolto la sua precedente.
+    \item \textbf{Secondary}: indicano un non-playing character (NPC) con cui interagire.
+    Risolvere una Secondary Quest aumenta il livello di 2 invece che di 1. 
+    \item \textbf{Contract}: indicano la lista di mostri da sconfiggere. Quando sono risolte, le Contract Quests offrono il 20\% in più della ricompensa indicata. 
+    \item \textbf{Treasure Hunt}: Un sottoinsieme delle Quest Contracts che specificano il Luogo dove trovare del loot dopo aver sconfitto i mostri.
+    \item \textbf{Downloadable Content (DLC)}: sono come le Main (definiscono un Luogo e hanno una sequenza, danno ricompensa 10), ma, inoltre, indicano una Main Quest da cui dipendono: se non è stata risolta quella Main Quest, non si può affrontare la specifica DLC Quest. 
+\end{itemize}
+
+Inizializzate l'applicazione con le seguenti Quests: 
+
+\begin{itemize}
+    \item \textbf{Main Quest}: Lilac and Gooseberries. LV: 2. Location: White Orchard. Prossima: The Nilfgaardian Connection.
+    \item \textbf{Main Quest}: The Nilfgaardian Connection. LV: 3. Location: Velen. Prossima: Pyres of Novigrad.
+    \item \textbf{Main Quest}: Pyres of Novigrad. LV: 5. Location: Novigrad. Prossima: nessuna.
+    \item \textbf{Secondary Quest}: A Favor for a Friend. LV: 2. Ricompensa: 10. NPC: Keira Metz.
+    \item \textbf{Secondary Quest}: The Last Wish. LV: 6. Ricompensa: 30. NPC: Bloody Baron.
+    \item \textbf{Contract}: Swamp Thing. LV: 12. Ricompensa: 40. Mostri: Drowners, Foglet.
+    \item \textbf{Contract-Treasure Hunt}: Coast of Wrecks. LV: 4. Ricompensa: 50. Mostri: Drowners. Luogo: Novigrad.
+    \item \textbf{Contract-Treasure Hunt}: Dirty Funds. LV: 1. Ricompensa: 20. Mostri: Wolves, Drowners. Luogo: Velen.
+    \item \textbf{DLC Quest}: Envoys, Wineboys. LV: 8. Location: Velen. Prossima: Capture the Castle. Dipende da: The Nilfgaardian Connection. 
+    \item \textbf{DLC Quest}: Capture the Castle. LV: 9. Location: Toussaint. Prossima: nessuna. Dipende da: The Nilfgaardian Connection.
+\end{itemize}
+
+In alto viene mostrato il livello corrente di Geraldo (inizializzato a 2) e i suoi soldi (inizializzati a 0). Dopo di che verranno stampate a video le Quests disponibili, numerate. Per selezionare una Quest e completarla, basterà digitare il numero corrispondente. Premere Invio senza scrivere nulla per uscire dall'applicazione.
+
+Completare una Quest aggiunge 1 livello a Geraldo (2 nel caso delle Secondary) e la relativa ricompensa ai suoi soldi. Le Quest completate mostrano \texttt{[COMPLETATA]} accanto al nome.
+
+Se la Quest non può essere completata (livello di Geraldo insufficiente, quest precedente non completata per le Main, Main dipendente non completata per le DLC), viene lanciata e gestita un'eccezione opportuna, e viene stampato un messaggio di errore sulla console. Se si prova a completare una Quest già completata, viene lanciata e gestita un'eccezione apposita.
+
+\begin{itemize}
+    \item Si usi, quando evidente/utile, una gerarchia di ereditarietà.
+    \item Si usino costanti ove ragionevole, e si badi alla pulizia del codice, evitando duplicazioni e codice inutilmente complesso.
+    \item Si richiede il class diagram UML. È sufficiente la vista di alto livello (no attributi/metodi) ma devono essere mostrate le associazioni più importanti, oltre a quella di ereditarietà.
+\end{itemize}
+
+\subsection*{Esempio 1}
+Stato iniziale. L'utente prova a completare la quest n. 6 (Swamp Thing, LV minimo 12), ma Geraldo è di livello 2.
+
+\begin{tcolorbox}[colback=gray!5, colframe=gray!50]
+\texttt{Livello: 2 Denaro: 0} \\
+\texttt{Quests disponibili:} \\
+\texttt{1) Lilac and Gooseberries Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Main Luogo: White Orchard  Prossima: The Nilfgaardian Connection} \\
+\texttt{2) The Nilfgaardian Connection Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Main Luogo: Velen Prossima: Pyres of Novigrad} \\
+\texttt{3) Pyres of Novigrad Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Main Luogo: Novigrad Prossima: nessuna} \\
+\texttt{4) A Favor for a Friend Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Secondary NPC: Keira Metz} \\
+\texttt{5) The Last Wish Ricompensa: 30} \\
+\texttt{\ \ \ Tipo: Secondary NPC: Bloody Baron} \\
+\texttt{6) Swamp Thing Ricompensa: 40} \\
+\texttt{\ \ \ Tipo: Contract Mostri: Drowners, Foglet} \\
+\texttt{7) Coast of Wrecks Ricompensa: 50} \\
+\texttt{\ \ \ Tipo: Treasure Hunt Mostri: Drowners Luogo: Novigrad} \\
+\texttt{8) Dirty Funds Ricompensa: 20} \\
+\texttt{\ \ \ Tipo: Treasure Hunt Mostri: Wolves, Drowners Luogo: Velen} \\
+\texttt{9) Envoys, Wineboys Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: DLC Luogo: Velen Prossima: Capture the Castle} \\
+\texttt{10) Capture the Castle Ricompensa: 10} \\
+\texttt{\ \ \ \ Tipo: DLC  Luogo: Toussaint Prossima: nessuna} \\
+\\
+\texttt{Seleziona il numero di una Quest da completare.} \\
+\texttt{Premi Invio senza scrivere nulla per uscire.} \\
+\texttt{>} \textbf{6} \\
+\texttt{Errore: livello insufficiente per Swamp Thing (richiesto: 12, attuale 2).}
+\end{tcolorbox}
+
+\newpage
+
+\subsection*{Esempio 2}
+Geraldo è al livello 5 con 20 denaro. L'utente prova a completare di nuovo la quest 1, già completata.
+
+\begin{tcolorbox}[colback=gray!5, colframe=gray!50]
+\texttt{Livello: 5 Denaro: 20} \\
+\texttt{Quests disponibili:} \\
+\texttt{1) [COMPLETATA] Lilac and Gooseberries Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Main Luogo: White Orchard Prossima: The Nilfgaardian Connection} \\
+\texttt{2) The Nilfgaardian Connection Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Main Luogo: Velen Prossima: Pyres of Novigrad} \\
+\texttt{3) Pyres of Novigrad Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Main Luogo: Novigrad Prossima: nessuna} \\
+\texttt{4) [COMPLETATA] A Favor for a Friend Ricompensa: 10} \\
+\texttt{\ \ \ Tipo: Secondary NPC: Keira Metz} \\
+\texttt{...} \\
+\\
+\texttt{Seleziona il numero di una Quest da completare.} \\
+\texttt{Premi Invio senza scrivere nulla per uscire.} \\
+\texttt{>} \textbf{1} \\
+\texttt{Errore: la quest Lilac and Gooseberries e' gia' stata completata.}
+\end{tcolorbox}
+
+\section{Suggerimenti}
+La soluzione proposta usa MVC. All'esame sarà richiesto ma per ora è possibile svolgere l'esercizio anche senza.
+\newline
+Si consiglia di implementare una gerarchia di eccezioni \texttt{QuestException} con sottoclassi specifiche per i diversi casi di errore.
+
+\end{document}
