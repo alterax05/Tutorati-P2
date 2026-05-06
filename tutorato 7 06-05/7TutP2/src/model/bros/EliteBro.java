@@ -23,7 +23,7 @@ public class EliteBro extends NormalBro{
     @Override
     public int getXP(Rank_Enms g) {
         int xp = super.getXP(g);
-        xp *= g.ordinal();
+        xp *= (g.ordinal() + 1);
         xp *= XP_ELITE;
         return xp;
     }

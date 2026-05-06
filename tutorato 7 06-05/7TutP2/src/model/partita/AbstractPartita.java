@@ -11,7 +11,7 @@ public abstract class AbstractPartita implements PartitaIntf {
 
     protected static final int BROS_QTY = 2;
 
-    private Rank_Enms grado;
+    private final Rank_Enms grado;
     protected Collection<BroIntf> bros;
     private Partita_stages stage;
 
@@ -28,8 +28,13 @@ public abstract class AbstractPartita implements PartitaIntf {
     protected abstract boolean canBan();
     protected abstract boolean areBansOk();
     protected abstract boolean areSelectionsOk();
-    public abstract String printBans();
+    protected abstract String printBans();
     protected abstract boolean addingBroConditions(BroIntf b);
+
+    @Override
+    public boolean isSelected(BroIntf b) {
+        return bros.contains(b);
+    }
 
     protected void nextStage(){
         if (this.stage == Partita_stages.Banning){

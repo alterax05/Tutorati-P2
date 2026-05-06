@@ -15,6 +15,7 @@ public class PartitaDiamond extends AbstractPartita{
     }
     protected PartitaDiamond(Rank_Enms master) {
         super(master);
+        this.bans = new HashSet<>();
     }
 
     @Override
@@ -47,6 +48,11 @@ public class PartitaDiamond extends AbstractPartita{
         if (this.areBansOk()){
             this.nextStage();
         }
+    }
+
+    @Override
+    public boolean isBanned(BroIntf b) {
+        return bans.contains(b);
     }
 
     @Override

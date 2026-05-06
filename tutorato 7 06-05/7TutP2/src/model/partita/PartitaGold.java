@@ -20,6 +20,11 @@ public class PartitaGold extends AbstractPartita{
     }
 
     @Override
+    public boolean isBanned(BroIntf b) {
+        return false;
+    }
+
+    @Override
     public void addBan(BroIntf b) {
         return;
     }

@@ -10,4 +10,6 @@ public interface PartitaIntf {
     Partita_stages getStage();
     boolean addBro(BroIntf b) throws BroNonPermessoException, MaxSelectReachedException, AlreadyAddedException, AlreadyBannedException;
     void play(Giocatore g) throws InsufficientSomethingException;
+    boolean isBanned(BroIntf b);
+    boolean isSelected(BroIntf b);
 }
