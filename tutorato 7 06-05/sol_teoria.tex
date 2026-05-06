@@ -1,0 +1,125 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{minted}
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% This sets the global style for all minted environments
+\setminted{
+    bgcolor=gray!10, % A very subtle 10% gray
+    linenos=true,    % Optional: adds line numbers
+}
+
+\title{Tutorato Programmazione 2}
+\author{Michele Porcellato, Giacomo Vettore}
+\date{6 Maggio 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Soluzioni Teoria}
+
+Dovete valutare i seguenti codici ed indicare l’output oppure l’errore. In caso di errore, indicate a che
+riga è l’errore e, a grandi linee, di che tipo di errore si tratta.
+
+\begin{minted}{java}
+import java.util.*;
+public class Test {
+    public static void main(String[] args) {
+        String[] a = {"limone", "ananas", "mango", "lime"};
+        Set<Integer> s = new HashSet<>();
+        List<Integer> l = new ArrayList<>();
+        for(String i: a) {
+            s.add(i.length());
+            l.add(i.length());
+        }
+        System.out.println(s.size() + l.size());
+    }
+}
+\end{minted}
+
+\begin{tcolorbox}[
+    width=\textwidth,
+    height=5cm,
+]
+7
+\end{tcolorbox}
+
+\begin{minted}{java}
+public class Test {
+    public static void main(String[] args) {
+        I i = new C(4);
+        System.out.println(i.m(2));
+    }
+}
+interface I {
+    int m(int z);
+}
+class A implements I {
+    int x;
+    A(int x) { this.x = x + 1; }
+    public int m(int z) { return x + z; }
+}
+class B extends A { 
+    B(int x) { super(++x); }
+    public int m(int z) { return x * z; }
+}
+class C extends B {
+    C(int x) { super(++x); }
+}
+\end{minted}
+
+\begin{tcolorbox}[
+    width=\textwidth,
+    height=5cm,
+]
+14
+\end{tcolorbox}
+
+\begin{minted}{java}
+import java.util.ArrayList;
+import java.util.List;
+
+public class Test {
+    public static void M(List<String> lista) {
+        System.out.println("Elaborazione lista di stringhe...");
+        for (String s : lista) {
+            System.out.println("- " + s);
+        }
+    }
+    
+    public static void M(List<Integer> lista) {
+        System.out.println("Elaborazione lista di interi...");
+        for (Integer i : lista) {
+            System.out.println("- " + i);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<String> A = new ArrayList<>();
+        A.add("Alice");
+        A.add("Bob");
+
+        List<Integer> B = new ArrayList<>();
+        B.add(10);
+        B.add(20);
+
+        M(A);
+    }
+}
+\end{minted}
+
+\begin{tcolorbox}[
+    width=\textwidth,
+    height=5cm
+]
+\textbf{Errore:} Compile-time \\
+error: name clash: M(List) and M(List) have the same erasure \\
+\# \textit{Commento:} Visto che i Generics di Java sono implementati con type-erasure, il compilatore, dopo aver fatto type-checking, non è in grado di distinguere i due metodi (hanno di fatto la stessa firma). \\
+Riga 12
+\end{tcolorbox}
+
+\end{document}
