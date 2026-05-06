@@ -1,0 +1,268 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{minted}
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% This sets the global style for all minted environments
+\setminted{
+    bgcolor=gray!10, % A very subtle 10% gray
+    linenos=true,    % Optional: adds line numbers
+}
+
+\title{Tutorato Programmazione 2}
+\author{Michele Porcellato, Giacomo Vettore}
+\date{8 Aprile 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Note}
+In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{\textit{documentazione Java}}. Sarà accessibile anche durante l'esame.
+
+\section{Teoria}
+
+Dovete valutare i seguenti codici ed indicare l’output oppure l’errore. In caso di errore, indicate a che
+riga è l’errore e, a grandi linee, di che tipo di errore si tratta.
+
+\begin{minted}{java}
+import java.util.*;
+public class Test {
+    public static void main(String[] args) {
+        String[] a = {"limone", "ananas", "mango", "lime"};
+        Set<Integer> s = new HashSet<>();
+        List<Integer> l = new ArrayList<>();
+        for(String i: a) {
+            s.add(i.length());
+            l.add(i.length());
+        }
+        System.out.println(s.size() + l.size());
+    }
+}
+\end{minted}
+
+\begin{tcolorbox}[
+    width=\textwidth,
+    height=5cm,
+    valign=center, % Centers content vertically
+    halign=center, % Centers content horizontally
+    sharp corners  % Makes it a perfect rectangle
+]
+\end{tcolorbox}
+
+\begin{minted}{java}
+public class Test {
+    public static void main(String[] args) {
+        I i = new C(4);
+        System.out.println(i.m(2));
+    }
+}
+interface I {
+    int m(int z);
+}
+class A implements I {
+    int x;
+    A(int x) { this.x = x + 1; }
+    public int m(int z) { return x + z; }
+}
+class B extends A { 
+    B(int x) { super(++x); }
+    public int m(int z) { return x * z; }
+}
+class C extends B {
+    C(int x) { super(++x); }
+}
+\end{minted}
+
+\begin{tcolorbox}[
+    width=\textwidth,
+    height=5cm,
+    valign=center, % Centers content vertically
+    halign=center, % Centers content horizontally
+    sharp corners  % Makes it a perfect rectangle
+]
+\end{tcolorbox}
+
+\begin{minted}{java}
+import java.util.ArrayList;
+import java.util.List;
+
+public class Test {
+    public static void M(List<String> lista) {
+        System.out.println("Elaborazione lista di stringhe...");
+        for (String s : lista) {
+            System.out.println("- " + s);
+        }
+    }
+    
+    public static void M(List<Integer> lista) {
+        System.out.println("Elaborazione lista di interi...");
+        for (Integer i : lista) {
+            System.out.println("- " + i);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<String> A = new ArrayList<>();
+        A.add("Alice");
+        A.add("Bob");
+
+        List<Integer> B = new ArrayList<>();
+        B.add(10);
+        B.add(20);
+
+        M(A);
+    }
+}
+\end{minted}
+
+\begin{tcolorbox}[
+    width=\textwidth,
+    height=5cm,
+    valign=center, % Centers content vertically
+    halign=center, % Centers content horizontally
+    sharp corners  % Makes it a perfect rectangle
+]
+\end{tcolorbox}
+
+\section{Esercizi}
+Si vuole realizzare l'applicazione "Ranked Games" che simula la gestione delle partite in un videogame multiplayer online (es., BrawlStars). Attraverso l'interfaccia testuale, l'utente simula le azioni sia del giocatore che dell'avversario, nonché decide l'esito della partita.
+
+\textbf{Giocatore, rank, partita.} Il giocatore ha associato un rank (grado) costituito da una categoria (Gold, Diamond, Master) e un livello (beginner, regular, expert) a seconda dell'esperienza maturata nelle partite giocate fino ad ora. Le partite sono caratterizzate dalle stesse tre categorie: un giocatore può giocare una partita soltanto se questa è di categoria pari o inferiore alla propria. Se la categoria è la stessa, in caso di vittoria il giocatore incrementa il proprio rank di un livello; viceversa, il rank non cambia in caso di sconfitta o di una partita di categoria inferiore.
+
+\textit{Esempio:} Si assuma che il giocatore abbia raggiunto rank pari Gold regular. Quando il giocatore vince una partita a livello Gold, il suo rank diventa Gold expert. Quando vince la partita successiva a livello Gold (l'unico possibile), il suo rank diventa Diamond beginner. A questo punto, il giocatore sceglie di giocare una partita a livello Diamond: se vince il suo rank diventa Diamond regular, mentre se perde (oppure decide di giocare invece una partita a livello Gold) il suo rank rimane inalterato.
+
+La finestra base del programma (Esempio 1 / Esempio 1.1) mostra il rank (categoria e livello) del giocatore e il numero di punti esperienza (XP) accumulati finora. Inoltre, mostra tre bottoni, uno per ogni categoria di partita: soltanto quelli accessibili in base al rank del giocatore sono abilitati. All'avvio del programma, il rank del giocatore è Gold expert e i suoi XP sono pari a 1.000.000.
+
+\textbf{Personaggi e loro selezione.} Il giocatore partecipa alla partita avvalendosi di una squadra di personaggi da lui scelti all'interno di quelli disponibili, ciascuno caratterizzato da un nome e da un livello numerico che ne rappresenta il valore. Alcuni dei personaggi, particolarmente rari, sono denominati Elite. Prima di iniziare una partita, il giocatore deve comporre la propria squadra, per combattere contro quella dell'avversario. Ciò avviene con modalità diverse a seconda della categoria della partita:
+\begin{itemize}
+    \item \textbf{Gold.} Il giocatore seleziona due personaggi fra quelli a disposizione; questi possono essere costituiti anche da uno stesso personaggio selezionato due volte.
+    \item \textbf{Diamond.} Prima della selezione del giocatore, l'avversario (simulato dallo stesso utente) può vietare l'utilizzo ("bannare") di alcuni personaggi, es., quelli più forti, disabilitandone esattamente due diversi fra loro. Terminata questa prima fase, il giocatore può selezionare i propri due personaggi da inserire nel team fra quelli rimanenti e non bannati; tuttavia, a differenza della categoria Gold, i personaggi selezionati devono essere diversi fra loro.
+    \item \textbf{Master.} La procedura di ban e selezione è identica al caso Diamond: l'unica differenza è che la selezione è valida solo se effettuata su personaggi con un livello superiore a 10 e/o Elite.
+\end{itemize}
+
+L'Esempio 2 mostra un esempio in cui il giocatore, inserendo 1 nella finestra base, ha iniziato una partita Gold. Inizialmente, tutti i personaggi sono disponibili. I personaggi Elite sono denotati dal tag \texttt{[ELITE]}. Il giocatore di una partita Gold può scegliere lo stesso personaggio due volte. In caso il giocatore viene selezionato due volte, il tag sarà \texttt{[SELEZIONATO]}
+
+L'Esempio 3 mostra invece un esempio in cui il giocatore ha scelto di giocare una partita Diamond. La selezione di un personaggio avviene cliccando sul quadrato corrispondente. L'avversario (simulato dall'utente) ha bannato due dei personaggi, alla quale si è aggiunto il tag \texttt{[BANNATO]}. Il giocatore (sempre simulato dall'utente) ha invece selezionato due dei personaggi rimanenti, il cui tag ora è \texttt{[SELEZIONATO]}.
+
+Una volta che un personaggio è stato bannato oppure selezionato l'operazione non può essere cancellata. Si scrive a console un messaggio d'errore errore ogni qualvolta l'utente tenta di: 
+\begin{itemize}
+    \item bannare o selezionare più di due personaggi
+    \item selezionare un personaggio bannato (solo in Diamond o Master)
+    \item elezionare un personaggio che non è Elite né ha livello superiore a 10 (solo in Master)
+    \item premere il bottone Vinci senza aver bannato e/o selezionato il numero richiesto di personaggi
+\end{itemize}
+
+\textbf{Esito della partita.} Una volta terminata la fase di selezione, l'utente simula l'esito della partita, determinando se il giocatore ha vinto oppure ha perso digitando \texttt{v} o \texttt{p}. In ambedue i casi viene mostrato stampato a video (Esempio 4) l'esito, seguito dal rank (categoria e livello), le caratteristiche dei personaggi che hanno partecipato alla partita, quelli eventualmente bannati e il totale di punti XP accumulati finora, pari a quelli precedenti alla partita sommati a quelli ottenuti in caso di vittoria. Quest'ultimo valore è determinato sommando i valori di XP generati da ciascuno dei personaggi impiegati:
+\begin{itemize}
+    \item \textbf{Normale:} il numero di XP è pari a \(100 \times L\), dove \(L\) è il livello del personaggio;
+    \item \textbf{Elite:} il numero di XP è pari a quello normale a sua volta moltiplicato per \(1000 \times C\), dove \(C\) dipende dalla categoria della partita e vale 1 per Gold, 2 per Diamond e 3 per Master.
+\end{itemize}
+Dopo di ciò si ritorna viene ripristinata la finestra base (Esempio 1.1) con il rank e numero di XP attuale.
+
+\newpage
+% --- PAGINA 2 ---
+
+\begin{tcolorbox}[
+    title=Esempio 1
+]
+Giocatore: 1000000 XP, grado: GOLD (EXPERT) \\
+Selezionare un livello con con cui procedere: \\
+1. GOLD \\
+Livello: 
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    title=Esempio 1.1
+]
+Giocatore: 1101100 XP, grado: MASTER (BEGINNER) \\
+Selezionare un livello con con cui procedere: \\
+1. GOLD \\
+2. DIAMOND \\
+3. MASTER \\
+Livello: 
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[
+    title=Esempio 2
+]
+Selezionare 2 giocatori:\\
+1. PAM LV: 1\\
+2. Piper LV: 1 [ELITE]\\
+3. Kenji LV: 5 [ELITE]\\
+4. Stecca LV: 5\\
+5. Berry LV: 11\\
+6. Jesse LV:11 [ELITE]\\
+Giocatore 1: \textbf{1}\\
+\\
+Selezionare 1 giocatori:\\
+1. PAM LV: 1 [SELEZIONATO]\\
+2. Piper LV: 1 [ELITE]\\
+3. Kenji LV: 5 [ELITE]\\
+4. Stecca LV: 5\\
+5. Berry LV: 11\\
+6. Jesse LV:11 [ELITE]\\
+Giocatore 1: \textbf{1}\\
+\\
+1. PAM LV: 1 [SELEZIONATO]\\
+2. Piper LV: 1 [ELITE]\\
+3. Kenji LV: 5 [ELITE]\\
+4. Stecca LV: 5\\
+5. Berry LV: 11\\
+6. Jesse LV:11 [ELITE]\\
+Vinci o perdi:\\
+\\
+...
+\end{tcolorbox}
+
+\vspace{0.3 cm}
+
+\begin{tcolorbox}[
+    title=Esempio 3
+]
+Giocatore: 1101100 XP, grado: DIAMOND (BEGINNER) \\
+Selezionare un livello con con cui procedere: \\
+1. GOLD \\
+2. DIAMOND \\
+\\
+Livello: 2 \\
+\\
+Selezionare 2 giocatori:\\
+1. PAM LV: 1\\
+2. Piper LV: 1 [ELITE] [BANNATO]\\
+3. Kenji LV: 5 [ELITE] [SELEZIONATO]\\
+4. Stecca LV: 5 [BANNATO]\\
+5. Berry LV: 11 [SELEZIONATO]\\
+6. Jesse LV:11 [ELITE]\\
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[
+    title=Esempio 4
+]
+Hai Vinto. \\
+Partita di livello: Diamond \\
+Personaggi selezionati: Berry LV: 11 Kenji LV:5 \\
+Personaggi bannati: Piper LV: 1 Stecca LV: 5 \\
+Punti totalizzati 2102200
+\end{tcolorbox}
+
+\section*{Requisiti}
+\begin{itemize}
+    \item Per testare le funzionalità si usino obbligatoriamente i dati visualizzati negli esempi. Tuttavia, il programma deve poter essere inizializzato con un numero arbitrario di personaggi.
+    \item Si usi, dove evidente/utile, una gerarchia di ereditarietà, specializzando opportunamente il comportamento delle classi e sfruttando ove possibile il polimorfismo.
+    \item Si usino costanti ove ragionevole (es., quando uno stesso valore viene usato più di una volta) e si badi alla pulizia del codice (es., linee guida Java) evitando duplicazioni e codice inutilmente complesso.
+    \item Al di fuori della definizione di costanti, si usi il modificatore static solo quando opportuno.
+\end{itemize}
+
+\begin{itemize}
+    \item[i)] Si consiglia di sviluppare prima il class diagram UML. È sufficiente la vista di alto livello (no attributi/metodi) ma devono essere mostrate le associazioni più importanti, oltre a quella di ereditarietà.
+\end{itemize}
+
+\end{document}
