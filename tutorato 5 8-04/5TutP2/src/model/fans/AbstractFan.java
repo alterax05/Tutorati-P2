@@ -8,7 +8,7 @@ import java.util.Date;
 
 public abstract class AbstractFan implements FanInterface{
 
-    protected int cost =10;
+    protected int cost = 10;
     protected AbstractAlimentazione alimentazione;
     protected Marche marca;
 
@@ -32,18 +32,5 @@ public abstract class AbstractFan implements FanInterface{
                 "Tipo: "+this.tf.name()+" " +
                 "Alimentazione: "+this.alimentazione.toString()+"\n" +
                 "Costo: "+this.cost;
-    }
-
-    public static int fanToInt(AbstractFan a){
-        if (a instanceof PiantanaFan){
-            return 0;
-        }
-        if (a instanceof PareteFan){
-            return 1;
-        }
-        if (a instanceof SoffittoFan){
-            return 2;
-        }
-        return -1;
     }
 }
