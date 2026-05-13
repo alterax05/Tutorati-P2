@@ -1,0 +1,631 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amssymb}
+
+\geometry{margin=2.5cm}
+\title{Tutorato Programmazione 2}
+\author{Michele Porcellato, Giacomo Vettore}
+\date{13 Maggio 2026}
+
+% Java listing style
+\lstdefinestyle{java}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{gray},
+  stringstyle=\color{orange!80!black},
+  numberstyle=\ttfamily\scriptsize\color{gray},
+  numbers=left,
+  numbersep=8pt,
+  frame=single,
+  frameround=tttt,
+  rulecolor=\color{black!30},
+  backgroundcolor=\color{gray!5},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  xleftmargin=1.5em,
+}
+
+% Box for error answers
+\newcommand{\errorbox}{%
+  \vspace{0.4em}
+  \noindent
+  \begin{tabular}{|p{3.2cm}|p{3.4cm}|p{5.6cm}|}
+    \hline
+    \rule{0pt}{2.4em}errore alla riga n.\dotfill\dotfill &
+    \textbf{A} in compilazione\newline\textbf{B} a runtime &
+    perché $\rightarrow$ \\[1.6em]
+    \hline
+  \end{tabular}
+  \vspace{0.4em}
+}
+
+% Box for output answers
+\newcommand{\outputbox}[1]{%
+  \vspace{0.4em}
+  \noindent
+  \begin{tabular}{|l|p{10cm}|}
+    \hline
+    \rule{0pt}{1.8em}\textbf{#1} \quad l'output è $\rightarrow$ & \phantom{XXXXXXXXXXXXXXXXXXX} \\
+    \hline
+  \end{tabular}
+  \vspace{0.4em}
+}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+% ─── Istruzioni ───────────────────────────────────────────────────────────────
+\begin{tcolorbox}[colback=gray!8, colframe=black!60, title=\textbf{Istruzioni (leggere attentamente)}]
+Vi sono tre tipi di domande e, di conseguenza, risposte:
+
+\begin{enumerate}[leftmargin=*, label=\arabic*.]
+
+\item Un frammento di codice che esegue correttamente. Si indichi l'output nell'apposito riquadro.
+
+\smallskip
+\noindent
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\rule{0pt}{1.6em}\textbf{Test N} \quad l'output è $\rightarrow$ & \\
+\hline
+\end{tabular}
+
+\item Un frammento di codice che genera errori. Si indichi in quale riga l'errore avviene; si specifichi la tipologia (in compilazione o a runtime) cerchiando la cella corrispondente (\textbf{A} o \textbf{B}); si spieghi brevemente la ragione dell'errore. \emph{Tutti e tre i riquadri devono essere compilati.}
+
+\smallskip
+\noindent
+\begin{tabularx}{\linewidth}{|p{3.2cm}|p{4cm}|X|}
+\hline
+\rule{0pt}{2.2em}errore alla riga n.\dotfill &
+\begin{tabular}{@{}l@{}}
+  \textbf{A} in compilazione \\[2pt]
+  \textbf{B} a runtime
+\end{tabular} &
+perché $\rightarrow$ \\
+\hline
+\end{tabularx}
+
+\item Domande vero/falso. Si riporti \textbf{V} (vero) o \textbf{F} (falso) nelle caselle corrispondenti. In questa tipologia, le \emph{risposte errate sottraggono punti}.
+
+\smallskip
+\noindent
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\rule{0pt}{1.4em}\textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} & \textbf{F} & \textbf{G} & \textbf{H} \\[2pt]
+\hline
+\phantom{XX} & \phantom{XX} & \phantom{XX} & \phantom{XX} & \phantom{XX} & \phantom{XX} & \phantom{XX} & \phantom{XX} \\
+\hline
+\end{tabular}
+
+\end{enumerate}
+\end{tcolorbox}
+
+
+
+\newpage
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 1  — ERRORE
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 1}
+\errorbox
+
+\begin{lstlisting}[style=java]
+public class Test {
+    static final int MAX = 10;
+    public static void main(String[] args) {
+        A a = new A();
+        a.m1(1);
+        C c = new C();
+        c.m2(2);
+    }
+}
+interface I1 {
+    public int m1(int x);
+}
+interface I2 extends I1 {
+    public int m2(int x);
+}
+class A implements I1 {
+    int a = 20;
+    public int m1(int x) {
+        return a + x;
+    }
+}
+class B extends A {}
+class C extends B implements I2 {}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 2  — ERRORE
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 2}
+\errorbox
+
+\begin{lstlisting}[style=java]
+public class Test {
+    static final int MAX = 10;
+    public static void main(String[] args) {
+        A a = new A(10);
+        a.m("mela");
+        A a1 = new C();
+        C c1 = (C) a1;
+        c1.m("pera");
+        A a2 = new B();
+        C c2 = (C) a2;
+        c2.m("banana");
+    }
+}
+interface I1 {
+    public int m(String s);
+}
+class A implements I1 {
+    int x;
+    A(int x) { this.x = x; }
+    public int m(String s) {
+        return s.length() * x;
+    }
+}
+class B extends A {
+    B() { super(0); }
+}
+class C extends B {}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 3  — ERRORE
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 3}
+\errorbox
+
+\begin{lstlisting}[style=java]
+public class Test {
+    public static void main(String[] args) {
+        A obj = new B();
+        obj.m(new D());
+    }
+}
+class A {
+    final void m(C c) { System.out.println("1"); }
+}
+class B extends A {
+    void m(C c) { System.out.println("2"); }
+    void m(D c) { System.out.println("3"); }
+}
+class C {}
+class D extends C {}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 4  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 4}
+\outputbox{Test 4}
+
+\begin{lstlisting}[style=java]
+public class Test {
+    public static void main(String[] args) {
+        A obj = new B();
+        A par = new B();
+        System.out.println(obj.m(par));
+    }
+}
+class A {
+    int x = 0;
+    String m(A a) { return "a in a"; }
+}
+class B extends A {
+    String m(B b) { return "b in b"; }
+    String m(A a) { return "a in b"; }
+}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 5  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 5}
+\outputbox{Test 5}
+
+\begin{lstlisting}[style=java]
+public class Test {
+    public static void main(String[] args) {
+        A a1 = new A(5);
+        A a2 = new A(3);
+        A a3 = new A(5);
+        System.out.println(a1.equals(a2));
+        System.out.println(!a1.equals(a3));
+    }
+}
+class A {
+    int x = 0;
+    A(int x) { this.x = x; }
+}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 6  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 6}
+\outputbox{Test 6}
+
+\begin{lstlisting}[style=java]
+public class Test {
+    public static void main(String[] args) {
+        A a = new A();
+        int r1 = a.m(6);
+        A a2 = new B(new Z());
+        int r2 = a2.m(1);
+        B b = new B(new Z());
+        int r3 = b.m(2);
+        System.out.println("" + r1 + " " + r2 + " " + r3);
+    }
+}
+class Z {}
+class A {
+    static int val = 5;
+    int m(int x) { val--; return x * val; }
+}
+class B extends A {
+    Z z;
+    B(Z z) { this.z = z; val++; }
+    int m(int x) { return x * val + 1; }
+}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 7  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 7}
+\outputbox{Test 7}
+
+\begin{lstlisting}[style=java]
+public class Test {
+    public static void main(String[] args) {
+        I i = new C(4);
+        System.out.println(i.m(2));
+    }
+}
+interface I {
+    int m(int z);
+}
+class A implements I {
+    int x;
+    A(int x) { this.x = x + 1; }
+    public int m(int z) { return x + z; }
+}
+class B extends A {
+    B(int x) { super(++x); }
+    public int m(int z) { return x * z; }
+}
+class C extends B {
+    C(int x) { super(++x); }
+}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 8  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 8}
+\outputbox{Test 8}
+
+\begin{lstlisting}[style=java]
+import java.util.*;
+public class Test {
+    public static void main(String[] args) {
+        String[] a = {"limone", "ananas", "mango", "lime"};
+        Set<Integer> s = new HashSet<>();
+        List<Integer> l = new ArrayList<>();
+        for (String i : a) {
+            s.add(i.length());
+            l.add(i.length());
+        }
+        System.out.println(s.size() + l.size());
+    }
+}
+\end{lstlisting}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 9  — VERO / FALSO
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 9}
+
+\noindent
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\rule{0pt}{1.4em}\textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} & \textbf{F} & \textbf{G} & \textbf{H} \\[2pt]
+\hline
+\phantom{XXX} & \phantom{XXX} & \phantom{XXX} & \phantom{XXX} & \phantom{XXX} & \phantom{XXX} & \phantom{XXX} & \phantom{XXX} \\[8pt]
+\hline
+\end{tabular}
+
+\bigskip
+
+\begin{enumerate}[label=\textbf{\Alph*.}, leftmargin=*, itemsep=0.5em]
+
+\item In una classe possono coesistere più metodi con lo stesso nome ma firme
+      (numero e tipo dei parametri) diverse.
+
+\item La parola chiave \texttt{finally} serve a terminare l'esecuzione del programma.
+
+\item Si consideri un attributo \texttt{x} dichiarato come \texttt{protected} nella classe
+      \texttt{C} del package \texttt{P1}; \texttt{x} non è visibile da una classe \texttt{D}
+      appartenente a un package \texttt{P2}, a meno che \texttt{D} non erediti da \texttt{C}.
+
+\item Le istruzioni \texttt{Object[] x = new Object[10]; x[0] = "elemento";} sono
+      illegali in Java, perché per gli array non è supportato il polimorfismo; questo è il
+      motivo principale per l'esistenza del Java Collection Framework, che invece supporta
+      questa funzionalità.
+
+\item Il garbage collector è una funzionalità del supporto run-time di Java molto utile,
+      in quanto gestisce in maniera automatica la deallocazione di oggetti non più utilizzati
+      dal programma, semplificando il lavoro del programmatore ed evitandone potenziali errori.
+
+\item Quando in Java si parla di un metodo \emph{overloaded} si fa riferimento a un metodo
+      ``sovraccarico'', cioè la cui implementazione genera una computazione particolarmente pesante.
+
+\item Una classe Java definita come \texttt{abstract} può essere usata all'interno di
+      gerarchie di classi con ereditarietà multipla.
+
+\item Siano dati due oggetti \texttt{a} e \texttt{b}, per i quali il test
+      \texttt{a.hashCode() == b.hashCode()} ritorna \texttt{true}. In questo caso, si può
+      stabilire con certezza che \texttt{a} e \texttt{b} sono identici, cioè puntano allo
+      stesso oggetto.
+
+\end{enumerate}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 10  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 10}
+\outputbox{Test 10}
+ 
+\begin{lstlisting}[style=java]
+public class Test {
+    public static void main(String[] args){
+        A obj = new B();
+        obj.m(new D());
+    }
+}
+class A {
+    void m(C c) { System.out.println("x"); }
+}
+class B extends A {
+    void m(C c) { System.out.println("y"); }
+    void m(D d) { System.out.println("z"); }
+}
+class C { }
+class D extends C { }
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 11  — ERRORE
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 11}
+\errorbox
+ 
+\begin{lstlisting}[style=java]
+import java.util.*;
+public class Sette {
+    Sette(){
+        List a = new ArrayList();
+        List b = new HashSet();
+        for (int k=0; k<10; k++) {
+            String s = "A" + (k%3);
+            a.add(s);
+            b.add(s);
+        }
+        System.out.println(a.size() + " " + b.size());
+    }
+    public static void main(String[] a) { new Sette(); }
+    public static void main(String a)   { new Sette(); new Sette(); }
+}
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 12  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 12}
+\outputbox{Test 12}
+ 
+\begin{lstlisting}[style=java]
+public class Test {
+    public static void main(String[] args) {
+        A a = new B();
+        B b = new B();
+        J j = b;
+        if (a.equals(b))
+            System.out.println(j.m(1) + b.m("scritto"));
+        else System.out.println(j.m(3));
+    }
+}
+interface I { int m(int z); }
+interface J extends I {}
+class A implements I {
+    int x = 10;
+    public int m(int z) { return x + z; }
+    public boolean equals(Object o) {
+        A obj = (A) o;
+        return x == obj.x;
+    }
+}
+class B extends A implements J {
+    public int m(String s) { return s.length(); }
+}
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 13  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 13}
+\outputbox{Test 13}
+ 
+\begin{lstlisting}[style=java]
+import java.util.*;
+public class E6 {
+    static Collection ll = new LinkedList();
+    int x = 6;
+    E6() {}
+    E6(int x) {
+        ll.add(this);
+        ll.add(new EA5());
+    }
+    public static void main(String z[]) {
+        new E6(3);
+        Iterator iter = ll.iterator();
+        while (iter.hasNext()) {
+            ((E6)(iter.next())).f();
+        }
+    }
+    public void f() { System.out.print(x); }
+}
+class EA5 extends E6 {
+    public void f() {
+        x++; super.f(); System.out.print(2);
+    }
+}
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 14  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 14}
+\outputbox{Test 14}
+ 
+\begin{lstlisting}[style=java]
+public class Sei {
+    char f() { return '6'; }
+    public static void main(String e[]) {
+        Sei a = new Sei();
+        Sei b = new Sette();
+        Sette c = new Sette();
+        System.out.print(a.f() + " " + b.f() + " " + c.f() + " ");
+        char ch[] = {'A', 'B', 'A', 'B', 'A', 'B'};
+        int i1 = 0, i2 = 2, i3 = 4;
+        if (a.equals(b)) i1++;
+        if (b.equals(a)) i2++;
+        if (c.equals(b)) i3++;
+        System.out.print(ch[i1] + " " + ch[i2] + " " + ch[i3]);
+    }
+}
+class Sette extends Sei {
+    char f() { return '7'; }
+    public boolean equals(Object a) { return (a instanceof Sei); }
+    public int hashCode() { return 3; }
+}
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 15  — ERRORE
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 15}
+\errorbox
+ 
+\begin{lstlisting}[style=java]
+public class Tre {
+    class A {
+        public A(int k) { System.out.print(k); }
+        public void finalize() { System.out.print("A"); }
+    }
+    class B extends A {
+        public B(int k) { System.out.print(k); }
+        public void finalize() { System.out.print("A"); }
+    }
+    public static void main(String z[]) { new Tre(); }
+    Tre() {
+        A a = new B(3);
+        B b = (B) a;
+        a = null;
+        b = new B(3);
+        System.gc();
+        System.runFinalization();
+    }
+}
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 16  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 16}
+\outputbox{Test 16}
+ 
+\begin{lstlisting}[style=java]
+public class Test8 {
+    public static void main(String[] args) {
+        A al = new A(5);
+        A a2 = new A(al.m()/2);
+        boolean b = (al == a2);
+        System.out.print(b);
+    }
+}
+class A {
+    int x;
+    A(int x) { this.x = x; }
+    int m() { return x*2; }
+}
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 17  — ERRORE
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 17}
+\errorbox
+ 
+\begin{lstlisting}[style=java]
+import java.util.*;
+public class B {
+    B() {
+        Collection b = new Collection();
+        for (int k=0; k<10; k++) {
+            String s = "A" + (k%4);
+            b.add(s);
+        }
+        int count = 0;
+        Iterator i = b.iterator();
+        while (i.hasNext()) {
+            Object s = i.next();
+            count++;
+        }
+        System.out.println(count);
+    }
+    public static void main(String[] a) { new B(); new B(); }
+    public static void main(String a)   { new B(); }
+}
+\end{lstlisting}
+ 
+% ═══════════════════════════════════════════════════════════════════════════════
+%  TEST 18  — OUTPUT
+% ═══════════════════════════════════════════════════════════════════════════════
+\section*{Test 18}
+\outputbox{Test 18}
+ 
+\begin{lstlisting}[style=java]
+public class C {
+    public static int x;
+    C(int s) { x = s; }
+    void f() { System.out.print(x); }
+    public static void main(String a[]) {
+        C b = new C(3);
+        C c = new C(5);
+        b.f();
+        c.f();
+    }
+}
+\end{lstlisting}
+ 
+\end{document}
