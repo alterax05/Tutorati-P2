@@ -472,43 +472,13 @@ class B extends A implements J {
 }
 \end{lstlisting}
  
+% ══════════════════════════════════════════════════════════
+ 
 % ═══════════════════════════════════════════════════════════════════════════════
 %  TEST 13  — OUTPUT
 % ═══════════════════════════════════════════════════════════════════════════════
 \section*{Test 13}
 \outputbox{Test 13}
- 
-\begin{lstlisting}[style=java]
-import java.util.*;
-public class E6 {
-    static Collection ll = new LinkedList();
-    int x = 6;
-    E6() {}
-    E6(int x) {
-        ll.add(this);
-        ll.add(new EA5());
-    }
-    public static void main(String z[]) {
-        new E6(3);
-        Iterator iter = ll.iterator();
-        while (iter.hasNext()) {
-            ((E6)(iter.next())).f();
-        }
-    }
-    public void f() { System.out.print(x); }
-}
-class EA5 extends E6 {
-    public void f() {
-        x++; super.f(); System.out.print(2);
-    }
-}
-\end{lstlisting}
- 
-% ═══════════════════════════════════════════════════════════════════════════════
-%  TEST 14  — OUTPUT
-% ═══════════════════════════════════════════════════════════════════════════════
-\section*{Test 14}
-\outputbox{Test 14}
  
 \begin{lstlisting}[style=java]
 public class Sei {
@@ -535,10 +505,10 @@ class Sette extends Sei {
  
 
 % ═══════════════════════════════════════════════════════════════════════════════
-%  TEST 15  — OUTPUT
+%  TEST 14  — OUTPUT
 % ═══════════════════════════════════════════════════════════════════════════════
-\section*{Test 15}
-\outputbox{Test 15}
+\section*{Test 14}
+\outputbox{Test 14}
  
 \begin{lstlisting}[style=java]
 public class Test8 {
@@ -557,9 +527,9 @@ class A {
 \end{lstlisting}
  
 % ═══════════════════════════════════════════════════════════════════════════════
-%  TEST 16  — ERRORE
+%  TEST 15  — ERRORE
 % ═══════════════════════════════════════════════════════════════════════════════
-\section*{Test 16}
+\section*{Test 15}
 \errorbox
  
 \begin{lstlisting}[style=java]
@@ -585,10 +555,10 @@ public class B {
 \end{lstlisting}
  
 % ═══════════════════════════════════════════════════════════════════════════════
-%  TEST 17  — OUTPUT
+%  TEST 16 — OUTPUT
 % ═══════════════════════════════════════════════════════════════════════════════
-\section*{Test 17}
-\outputbox{Test 17}
+\section*{Test 16}
+\outputbox{Test 16}
  
 \begin{lstlisting}[style=java]
 public class C {
