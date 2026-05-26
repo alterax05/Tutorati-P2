@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{minted}
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\title{Tutorato Programmazione 2}
+\author{Michele Porcellato, Giacomo Vettore}
+\date{27 Maggio 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Note}
+In caso di dubbi, consultare la \href{https://docs.oracle.com/en/java/javase/25/docs/api/index.html}{\textit{documentazione Java}}. Sarà accessibile anche durante l'esame.
+
+\section{Esame}
+
+Si progetti \textbf{Bro-Stelle}, un'applicazione che permette di usare diversi tipi di \textit{Bros}. Un Bro ha un nome (stringa), un livello (da 1 a 11), un tipo (che determina la sua vita minima e massima e la sua velocità e che indica un colore per la GUI), e un attacco. I diversi tipi di Bros sono:
+\begin{itemize}
+    \item \textbf{Tank} (\texttt{MAGENTA}): vita minima: 8000, vita massima 10500, velocità: lenta;
+    \item \textbf{Long-ranged}: velocità: normale; e si dividono in:
+    \begin{itemize}
+        \item \textbf{Sniper} (\texttt{OLIVE}): vita minima: 3000, vita massima 5500;
+        \item \textbf{Artillery} (\texttt{CYAN}): vita minima: 2000, vita massima 3500;
+    \end{itemize}
+\end{itemize}
+Un Bro di livello 1 ha la vita minima dettata dal suo tipo. Per ogni livello successivo all'1, il Bro aggiunge alla sua vita il 10\% della vita minima del suo tipo, fino a un massimo uguale alla vita massima del tipo. Per esempio, un Tank di livello 1 ha 8000 di vita, a livello 2 ha 8800 di vita, a livello 3 ha 9600 di vita, ma a livello 11 ha 10500 di vita.
+\newline
+\newline
+Un attacco ha un nome (stringa), un danno base (\texttt{int}), un tipo (che determina la portata e la traiettoria). I diversi tipi di attacco sono i seguenti:
+\begin{itemize}
+    \item \textbf{Single}: portata: molto lunga (150px), traiettoria: terreno;
+    \item \textbf{AoE}: portata: media (100px); e si dividono in:
+    \begin{itemize}
+        \item \textbf{Lobber}: traiettoria: aerea;
+        \item \textbf{Blast}: traiettoria: terreno;
+    \end{itemize}
+\end{itemize}
+Il danno che fa un attacco è il danno base più il 10\% per ogni livello del Bro (senza limite, a differenza della vita del Bro).
+
+\vspace{0.4cm}
+\noindent
+L'applicazione è inizializzata con questi Bros:
+\begin{itemize}
+    \item \textbf{Franco} (di tipo Tank), lv 2, con attacco: \textbf{SBAM} (di tipo Blast), 1000 danni base;
+    \item \textbf{Dinamichele} (di tipo Artillery), lv 8, con attacco: \textbf{Bomba} (di tipo Lobber), 2000 danni base;
+    \item \textbf{Ape} (di tipo Sniper), lv 11, con attacco: \textbf{Bzz} (di tipo Singolo), 2000 danni base;
+    \item \textbf{Edoardo} (di tipo Tank), lv 1, con attacco: \textbf{Sciarpa} (di tipo Singolo), 500 danni base;
+    \item \textbf{Salice} (di tipo Sniper), lv 1, con attacco: \textbf{Tentacolo} (di tipo Lobber), 1200 danni base;
+\end{itemize}
+
+\newpage
+
+\noindent
+Come si vede in figura, l'applicazione mostra: in alto una lista di Bros; al centro uno spazio \textbf{BLACK} di 300x300 px, dove viene mostrato il Bro selezionato; in basso un obiettivo da attaccare; a sinistra un bottone per ordinare i Bros per vita e uno per ordinarli per nome. 
+
+\noindent
+Nella lista, i Bros sono mostrati come un quadrato del colore del tipo del Bro, di 70px con al centro il nome del Bro. L'obiettivo da attaccare si presenta come un testo indicante il totale di HP (inizializzato a 10.000) e un bottone che resetta gli HP a 10.000.
+
+\vspace{0.3cm}
+\noindent
+Una volta cliccato un Bro dalla lista in alto, viene visualizzato al centro dell'applicazione, affiancato da un bottone \textbf{"+"} e circondato da un'area \textbf{GREEN} che indica la sua portata di attacco. Al centro, i Bros sono mostrati come un rettangolo del colore del tipo del Bro, di 130x90px, con al centro il nome, il livello, la vita, la velocità del Bro, seguiti dall'attacco del Bro. L'attacco del Bro indica il nome e il danno.
+
+\vspace{0.3cm}
+\noindent
+Premere \textbf{"+"} aumenta il livello del Bro di 1, a meno che non sia a livello 11, in qual caso si mostra un messaggio di \textbf{ALERT} di tipo \textbf{ERROR} che dice \textit{"Livello massimo raggiunto"}. \textbf{Nota:} quando aumenta il livello, cambiano vita e danno dell'attacco, e queste informazioni vanno aggiornate quando si preme \textbf{"+"}.
+
+\vspace{0.3cm}
+\noindent
+Cliccare nell'area \textbf{GREEN} del Bro emette un attacco che colpisce l'obiettivo e ne aggiorna gli HP. La grandezza dell'area dipende dalla portata dell'attacco, come indicato nella lista degli attacchi. Quando il bersaglio viene ucciso, si mostri un messaggio di \textbf{ALERT} di tipo \textbf{ERROR} con un messaggio appropriato e si resetti il bersaglio.
+
+\vspace{0.3cm}
+\noindent
+L'ordinamento naturale dei Bros è per nome, alfabetico, inoltre si possono ordinare per vita (crescente); in caso di conflitti si ordini usando l'ordinamento naturale.
+
+% --- IMMAGINI REALI DELL'INTERFACCIA ---
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+    \centering
+    % Inserisce l'immagine di sinistra regolando la larghezza alla metà della pagina
+    \includegraphics[width=\textwidth]{tutorato 9 27-05/imgs/start-image.jpeg}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    % Inserisce l'immagine di destra
+    \includegraphics[width=\textwidth]{tutorato 9 27-05/imgs/selected.jpeg}
+\end{minipage}
+
+\label{fig:interfaccia}
+\end{figure}
+
+\begin{itemize}
+    \item Si usi, quando evidente/utile, una gerarchia di ereditarietà.
+    \item Si usino costanti ove ragionevole, e si badi alla pulizia del codice, evitando duplicazioni e codice inutilmente complesso.
+    \item La disposizione degli elementi grafici deve rispecchiare quanto mostrato; tuttavia, ciò è considerato meno importante rispetto alla corretta funzionalità dell'interfaccia e del resto dell'applicazione.
+    \item Si richiede il \textbf{class diagram UML}. È sufficiente la vista di alto livello (no attributi/metodi) ma devono essere mostrate le associazioni più importanti, oltre a quella di ereditarietà. Il diagramma UML deve essere consegnato su un foglio di protocollo su cui sono indicati nome, cognome, numero di matricola.
+    \item Ricordatevi delle \texttt{ConcurrentModificationException} nelle collection di JavaFX (quindi occhio a usare il costrutto \texttt{foreach}).
+\end{itemize}
+
+\end{document}
